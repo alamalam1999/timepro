@@ -6,6 +6,7 @@ if (empty($_SESSION['username'])) {
     header('location:../index.php');
 } else {
     include "../conn.php";
+    date_default_timezone_set('Asia/Jakarta');
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -21,11 +22,11 @@ if (empty($_SESSION['username'])) {
 
     <body>
         <!-- Start Page Loading -->
-        <div id="loader-wrapper">
+        <!-- <div id="loader-wrapper">
             <div id="loader"></div>
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
-        </div>
+        </div> -->
         <!-- End Page Loading -->
 
         <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -62,10 +63,6 @@ if (empty($_SESSION['username'])) {
 
             <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-
-
-
-
             <?php
 
 
@@ -74,9 +71,10 @@ if (empty($_SESSION['username'])) {
                 $id_tiket  = $_POST['id_tiket'];
                 $waktu     = $_POST['waktu'];
                 $tanggal   = $_POST['tanggal'];
-                $pc_no     = $_POST['pc_no'];
+                $no_hp     = $_POST['no_hp'];
                 $nama      = $_POST['nama'];
                 $email     = $_POST['email'];
+                $due_date  = $_POST['due_date'];
                 $departemen = $_POST['departemen'];
                 $problem   = $_POST['problem'];
                 $filename  = $_FILES["choosefile"]["name"];
@@ -93,7 +91,7 @@ if (empty($_SESSION['username'])) {
                 $laporan .= "<td>Tanggal</td><td>:</td><td>$tanggal</td>";
                 $laporan .= "</tr>";
                 $laporan .= "<tr>";
-                $laporan .= "<td>PC NO</td><td>:</td><td>$pc_no</td>";
+                $laporan .= "<td>No Hp</td><td>:</td><td>$no_hp</td>";
                 $laporan .= "</tr>";
                 $laporan .= "<tr>";
                 $laporan .= "<td>Nama</td><td>:</td><td>$nama</td>";
@@ -107,10 +105,13 @@ if (empty($_SESSION['username'])) {
                 $laporan .= "<tr>";
                 $laporan .= "<td>Status/td><td>:</td><td>$open</td>";
                 $laporan .= "</tr>";
+                $laporan .= "<tr>";
+                $laporan .= "<td>Status/td><td>:</td><td>$due_date</td>";
+                $laporan .= "</tr>";
 
 
-                require_once("phpmailer/class.phpmailer.php");
-                require_once("phpmailer/class.smtp.php");
+                require_once("../phpmailer/class.phpmailer.php");
+                require_once("../phpmailer/class.smtp.php");
 
                 $sendmail = new PHPMailer(true);
                 $sendmail->isSMTP();                                            // Send using SMTP
@@ -133,237 +134,102 @@ if (empty($_SESSION['username'])) {
 
                     $cek = mysqli_query($koneksi, "SELECT * FROM tiket WHERE id_tiket='$id_tiket'");
                     if (mysqli_num_rows($cek) == 0) {
-                        $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, pc_no, nama, email, departemen, problem, penanganan, status, filename)
-															VALUES('$id_tiket','$waktu','$tanggal','$pc_no','$nama','$email','$departemen','$problem','$none','$open','$filename')") or die(mysqli_error());
+                        $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, no_hp, nama, email, departemen, problem, penanganan, status, filename,waktu_close)
+															VALUES('$id_tiket','$waktu','$tanggal','$no_hp','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')") or die(mysqli_error());
                         if ($insert) {
                             move_uploaded_file($tempname, $folder);
-                            echo '<script>sweetAlert({
-	                                                   title: "Keluhan berhasil dikirim!", 
-                                                        text: "Cek email anda untuk mengetahui nomor tiket!", 
-                                                        type: "success"
-                                                        });</script>';
+                            echo '<h1>BERHASIL </h1>';
                         } else {
-                            echo '<script>sweetAlert({
-	                                                   title: "Gagal!", 
-                                                        text: "Keluhan Gagal di kirim, silahakan coba lagi!", 
-                                                        type: "error"
-                                                        });</script>';
+                            echo '<h1>TIDAK BERHASIL </h1>';
                         }
                     } else {
-                        echo '<script>sweetAlert({
-	                                                   title: "Gagal!", 
-                                                        text: "Tiket Sudah ada Sebelumnya!", 
-                                                        type: "error"
-                                                        });</script>';
+                        echo '<h1>GAGAL BERHASIL </h1>';
                     }
                 }
             }
             ?>
+            <div class="container">
+
+                <form class="cd-form floating-labels" method="POST" enctype="multipart/form-data" action="input_project.php">
+
+                    <legend>
+                        <h2>Input Perkerjaan</h2>
+                    </legend>
+
+                    <fieldset>
+
+                        <input type="hidden" name="id_tiket" value="<?php echo date("dmYHis"); ?>" id="id_ticket" />
+                        <input type="hidden" name="waktu" value="<?php echo date("Y-m-d H:i:s"); ?>" id="waktu" />
+                        <input type="hidden" name="tanggal" value="<?php echo date("Y-m-d"); ?>" id="tanggal" />
+                        <div class="icon">
+                            <label class="cd-label" for="no_hp">Nama Pekerjaan</label>
+                            <input class="company" type="text" name="no_hp" id="no_hp" autocomplete="off" required="required">
+                        </div>
+
+                        <div class="icon">
+                            <label class="cd-label" for="nama">Nama</label>
+                            <input class="user" type="text" name="nama" id="nama" autocomplete="off" required="required">
+                        </div>
+
+                        <div class="icon">
+                            <label class="cd-label" for="nama">Email</label>
+                            <input class="email" type="email" name="email" id="email" autocomplete="off" required="email">
+                        </div>
 
 
+                        <div class="icon">
+                            <label class="cd-label" for="cd-email">Departemen terkait pekerjaan</label>
+                            <select class="email" name="departemen" id="departemen" required>
+                                <option value=""></option>
+                                <option value="Research and Development">Research and Development</option>
+                                <option value="Human Resources">Human Resources</option>
+                                <option value="General Affair">General Affair</option>
+                                <option value="Accounting & Tax">Accounting & Tax</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Building Maintenance">Building & Maintenance</option>
+                                <option value="Building Maintenance">Branding & Marketing</option>
+                                <option value="Transformasi Digital">Transformasi Digital (IT)</option>
+                                <option value="KB Avicenna Pamulang">KB Avicenna Pamulang</option>
+                                <option value="TK Avicenna Jagakarsa">TK Avicenna Jagakarsa</option>
+                                <option value="SD Avicenna Jagakarsa">SD Avicenna Jagakarsa</option>
+                                <option value="SMP Avicenna Jagakarsa">SMP Avicenna Jagakarsa</option>
+                                <option value="SMA Avicenna Jagakarsa">SMA Avicenna Jagakarsa</option>
+                                <option value="SD Avicenna Cinere">SD Avicenna Cinere</option>
+                                <option value="SMP Avicenna Cinere">SMP Avicenna Cinere</option>
+                                <option value="SMA Avicenna Cinere">SMA Avicenna Cinere</option>
+                            </select>
+                        </div>
 
 
+                        <div class="icon">
+                            <label class="cd-label">Keterangan</label>
+                            <textarea class="message" name="problem" id="problem" required></textarea>
+                        </div>
 
+                        <div class="icon">
+                            <label class="cd-label">Due Date</label>
+                            <input type="datetime-local" name="due_date" id="due_date" required>
+                        </div>
+
+
+                        <label for="cd-textarea">Lampiran Pekerjaan</label>
+                        <input name="choosefile" type="file" class="form-control" id="customFile" />
+
+
+                        <input type="submit" onclick="notifikasi()" name="input" id="input" value="Send Message">
+
+                    </fieldset>
+
+                </form>
+
+            </div>
             <script src="js/main.js"></script> <!-- Resource jQuery -->
 
-            <!-- <script>
-  sweetAlert("Hello world!");
-  </script> -->
-
-
-            <script>
-                $(document).ready(function() {
-                    if (Notification.permission !== "granted")
-                        Notification.requestPermission();
-                });
-
-                function notifikasi() {
-                    if (!Notification) {
-                        alert('Browsermu tidak mendukung Web Notification.');
-                        return;
-                    }
-                    if (Notification.permission !== "granted")
-                        Notification.requestPermission();
-                    else {
-                        var notifikasi = new Notification('IT Helpdesk Tiket', {
-                            icon: 'img/logo.jpg',
-                            body: "Tiket Baru dari <?php echo $nama; ?>",
-                        });
-                        notifikasi.onclick = function() {
-                            window.open("http://tsuchiya-mfg.com");
-                        };
-                        setTimeout(function() {
-                            notifikasi.close();
-                        }, 1000);
-                    }
-                };
-            </script>
-
-
-            <!--Start of Tawk.to Script-->
-            <script type="text/javascript">
-                var Tawk_API = Tawk_API || {},
-                    Tawk_LoadStart = new Date();
-                (function() {
-                    var s1 = document.createElement("script"),
-                        s0 = document.getElementsByTagName("script")[0];
-                    s1.async = true;
-                    s1.src = 'https://embed.tawk.to/63b244a647425128790b2078/1glo5ob15';
-                    s1.charset = 'UTF-8';
-                    s1.setAttribute('crossorigin', '*');
-                    s0.parentNode.insertBefore(s1, s0);
-                })();
-            </script>
-            <!--End of Tawk.to Script-->
-
     </html>
-
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START RIGHT SIDEBAR NAV-->
-    <aside id="right-sidebar-nav">
-        <ul id="chat-out" class="side-nav rightside-navigation">
-            <li class="li-hover">
-                <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
-                <div id="right-search" class="row">
-                    <form class="col s12">
-                        <div class="input-field">
-                            <i class="mdi-action-search prefix"></i>
-                            <input id="icon_prefix" type="text" class="validate">
-                            <label for="icon_prefix">Search</label>
-                        </div>
-                    </form>
-                </div>
-            </li>
-            <li class="li-hover">
-                <ul class="chat-collapsible" data-collapsible="expandable">
-                    <li>
-                        <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent Activity</div>
-                        <div class="collapsible-body recent-activity">
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">just now</a>
-                                    <p>Jim Doe Purchased new equipments for zonal office.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-device-airplanemode-on"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">Yesterday</a>
-                                    <p>Your Next flight for USA will be on 15th August 2015.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">5 Days Ago</a>
-                                    <p>Natalya Parker Send you a voice mail for next conference.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">Last Week</a>
-                                    <p>Jessy Jay open a new store at S.G Road.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">5 Days Ago</a>
-                                    <p>Natalya Parker Send you a voice mail for next conference.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header light-blue white-text active"><i class="mdi-editor-attach-money"></i>Sales Repoart</div>
-                        <div class="collapsible-body sales-repoart">
-                            <div class="sales-repoart-list  chat-out-list row">
-                                <div class="col s8">Target Salse</div>
-                                <div class="col s4"><span id="sales-line-1"></span>
-                                </div>
-                            </div>
-                            <div class="sales-repoart-list chat-out-list row">
-                                <div class="col s8">Payment Due</div>
-                                <div class="col s4"><span id="sales-bar-1"></span>
-                                </div>
-                            </div>
-                            <div class="sales-repoart-list chat-out-list row">
-                                <div class="col s8">Total Delivery</div>
-                                <div class="col s4"><span id="sales-line-2"></span>
-                                </div>
-                            </div>
-                            <div class="sales-repoart-list chat-out-list row">
-                                <div class="col s8">Total Progress</div>
-                                <div class="col s4"><span id="sales-bar-2"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>
-                        <div class="collapsible-body favorite-associates">
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Eileen Sideways</p>
-                                    <p class="place">Los Angeles, CA</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Zaham Sindil</p>
-                                    <p class="place">San Francisco, CA</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Renov Leongal</p>
-                                    <p class="place">Cebu City, Philippines</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Weno Carasbong</p>
-                                    <p>Tokyo, Japan</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Nusja Nawancali</p>
-                                    <p class="place">Bangkok, Thailand</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </aside>
-    <!-- LEFT RIGHT SIDEBAR NAV-->
-
     </div>
     <!-- END WRAPPER -->
-
     </div>
     <!-- END MAIN -->
-
-
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
 
@@ -418,6 +284,51 @@ if (empty($_SESSION['username'])) {
             }, 18000);
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+        });
+
+        function notifikasi() {
+            if (!Notification) {
+                alert('Browsermu tidak mendukung Web Notification.');
+                return;
+            }
+            if (Notification.permission !== "granted")
+                Notification.requestPermission();
+            else {
+                var notifikasi = new Notification('IT Helpdesk Tiket', {
+                    icon: 'img/logo.jpg',
+                    body: "Tiket Baru dari <?php echo $nama; ?>",
+                });
+                notifikasi.onclick = function() {
+                    window.open("http://tsuchiya-mfg.com");
+                };
+                setTimeout(function() {
+                    notifikasi.close();
+                }, 1000);
+            }
+        };
+    </script>
+
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+        (function() {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/63b244a647425128790b2078/1glo5ob15';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
     </body>
 
     </html>

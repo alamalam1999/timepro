@@ -161,7 +161,7 @@ if (empty($_SESSION['username'])) {
             ?>
 
 
-            <div class="card-body">
+            <div class="container">
                 <?php
                 // Function to get the name of the month
                 function getMonthName($month)
@@ -174,40 +174,61 @@ if (empty($_SESSION['username'])) {
                 }
 
                 // Function to generate the calendar
-                function generateCalendar($year, $month)
+                function generateCalendar($year, $month, $highlightedDays)
                 {
-                    $firstDay = mktime(0, 0, 0, $month, 1, $year);
-                    $totalDays = date("t", $firstDay);
-                    $numDayOfWeek = date("w", $firstDay);
-
                     echo "<h2>" . getMonthName($month) . " " . $year . "</h2>";
                     echo "<table>";
                     echo "<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>";
+
+                    $firstDay = mktime(0, 0, 0, $month, 1, $year);
+                    $totalDays = date("t", $firstDay);
+                    $numDayOfWeek = date("w", $firstDay);
 
                     echo "<tr>";
                     // Display blank cells for days before the first day of the month
                     for ($i = 0; $i < $numDayOfWeek; $i++) {
                         echo "<td>kosong</td>";
                     }
+
                     // Display the days of the month
                     for ($day = 1; $day <= $totalDays; $day++) {
-                        if ($day == '7') {
-                            echo "<td bgcolor='red'>$day</td>";
-                        } else {
-                            echo "<td>$day</td>";
-                        }
+                        $highlightClass = in_array($day, $highlightedDays) ? 'bgcolor="red"' : '';
+                        echo "<td $highlightClass>$day</td>";
+
                         if (++$numDayOfWeek == 7) {
                             echo "</tr><tr>";
                             $numDayOfWeek = 0;
                         }
                     }
+
                     // Fill in remaining blank cells in the last row
                     while ($numDayOfWeek > 0 && $numDayOfWeek < 7) {
                         echo "<td>kosong</td>";
                         $numDayOfWeek++;
                     }
+
                     echo "</tr>";
                     echo "</table>";
+                }
+
+                // Database connection
+                $servername = "localhost";
+                $username = "root";
+                $password = "";
+                $dbname = "employee_tiket";
+
+                $koneksi = mysqli_connect($servername, $username, $password, $dbname);
+
+                // Check connection
+                if (!$koneksi) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
+
+                // Fetch highlighted days from the database
+                $highlightedDays = [];
+                $result = mysqli_query($koneksi, "SELECT * FROM tiket");
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $highlightedDays[] = date('d', strtotime($row['waktu_close']));
                 }
 
                 // Get the current year and month
@@ -215,16 +236,40 @@ if (empty($_SESSION['username'])) {
                 $currentMonth = date("n");
 
                 // Display the calendar for the current month
-                generateCalendar($currentYear, $currentMonth);
+                generateCalendar($currentYear, $currentMonth, $highlightedDays);
+
+                // Close database connection
+                mysqli_close($koneksi);
                 ?>
 
 
-                <script src="js/main.js"></script> <!-- Resource jQuery -->
             </div>
-            <!-- <script>
-  sweetAlert("Hello world!");
-  </script> -->
+            <div class="container">
+                <h3>List Job Scheduler</h3>
+                <div class="col-lg-12" style="margin-top: 40px;">
 
+
+
+                    <table id="lookup" class="table table-bordered table-hover">
+                        <thead bgcolor="eeeeee" align="center">
+                            <tr>
+                                <th>Id Tiket</th>
+                                <th>Tanggal</th>
+                                <th>Jabatan</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Permasalahan</th>
+                                <th>Departemen</th>
+                                <th>Status</th>
+                                <th>Edit Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
             <script>
                 $(document).ready(function() {
@@ -271,208 +316,81 @@ if (empty($_SESSION['username'])) {
             </script>
             <!--End of Tawk.to Script-->
 
-    </html>
 
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
-    <!-- START RIGHT SIDEBAR NAV-->
-    <aside id="right-sidebar-nav">
-        <ul id="chat-out" class="side-nav rightside-navigation">
-            <li class="li-hover">
-                <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
-                <div id="right-search" class="row">
-                    <form class="col s12">
-                        <div class="input-field">
-                            <i class="mdi-action-search prefix"></i>
-                            <input id="icon_prefix" type="text" class="validate">
-                            <label for="icon_prefix">Search</label>
-                        </div>
-                    </form>
-                </div>
-            </li>
-            <li class="li-hover">
-                <ul class="chat-collapsible" data-collapsible="expandable">
-                    <li>
-                        <div class="collapsible-header teal white-text active"><i class="mdi-social-whatshot"></i>Recent Activity</div>
-                        <div class="collapsible-body recent-activity">
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">just now</a>
-                                    <p>Jim Doe Purchased new equipments for zonal office.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-device-airplanemode-on"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">Yesterday</a>
-                                    <p>Your Next flight for USA will be on 15th August 2015.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">5 Days Ago</a>
-                                    <p>Natalya Parker Send you a voice mail for next conference.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">Last Week</a>
-                                    <p>Jessy Jay open a new store at S.G Road.</p>
-                                </div>
-                            </div>
-                            <div class="recent-activity-list chat-out-list row">
-                                <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
-                                </div>
-                                <div class="col s9 recent-activity-list-text">
-                                    <a href="#">5 Days Ago</a>
-                                    <p>Natalya Parker Send you a voice mail for next conference.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header light-blue white-text active"><i class="mdi-editor-attach-money"></i>Sales Repoart</div>
-                        <div class="collapsible-body sales-repoart">
-                            <div class="sales-repoart-list  chat-out-list row">
-                                <div class="col s8">Target Salse</div>
-                                <div class="col s4"><span id="sales-line-1"></span>
-                                </div>
-                            </div>
-                            <div class="sales-repoart-list chat-out-list row">
-                                <div class="col s8">Payment Due</div>
-                                <div class="col s4"><span id="sales-bar-1"></span>
-                                </div>
-                            </div>
-                            <div class="sales-repoart-list chat-out-list row">
-                                <div class="col s8">Total Delivery</div>
-                                <div class="col s4"><span id="sales-line-2"></span>
-                                </div>
-                            </div>
-                            <div class="sales-repoart-list chat-out-list row">
-                                <div class="col s8">Total Progress</div>
-                                <div class="col s4"><span id="sales-bar-2"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="collapsible-header red white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>
-                        <div class="collapsible-body favorite-associates">
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Eileen Sideways</p>
-                                    <p class="place">Los Angeles, CA</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Zaham Sindil</p>
-                                    <p class="place">San Francisco, CA</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Renov Leongal</p>
-                                    <p class="place">Cebu City, Philippines</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Weno Carasbong</p>
-                                    <p>Tokyo, Japan</p>
-                                </div>
-                            </div>
-                            <div class="favorite-associate-list chat-out-list row">
-                                <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
-                                </div>
-                                <div class="col s8">
-                                    <p>Nusja Nawancali</p>
-                                    <p class="place">Bangkok, Thailand</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </aside>
-    <!-- LEFT RIGHT SIDEBAR NAV-->
 
-    </div>
-    <!-- END WRAPPER -->
+            </div>
+            <!-- END WRAPPER -->
 
-    </div>
-    <!-- END MAIN -->
+        </div>
+        <!-- END MAIN -->
 
 
 
-    <!-- //////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-    <!-- START FOOTER -->
-    <?php include "footer.php"; ?>
-    <!-- END FOOTER -->
+        <!-- START FOOTER -->
+        <?php include "footer.php"; ?>
+        <!-- END FOOTER -->
 
 
-    <!-- ================================================
+        <!-- ================================================
     Scripts
     ================================================ -->
 
-    <!-- jQuery Library -->
-    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
-    <!--materialize js-->
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <!--scrollbar-->
-    <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <!-- jQuery Library -->
+        <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
+        <!--materialize js-->
+        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <!--scrollbar-->
+        <script type="text/javascript" src="js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
 
-    <!-- chartist -->
-    <script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>
+        <!-- chartist -->
+        <script type="text/javascript" src="js/plugins/chartist-js/chartist.min.js"></script>
 
-    <!-- chartjs -->
-    <script type="text/javascript" src="js/plugins/chartjs/chart.min.js"></script>
-    <script type="text/javascript" src="js/plugins/chartjs/chart-script.js"></script>
+        <!-- chartjs -->
+        <script type="text/javascript" src="js/plugins/chartjs/chart.min.js"></script>
+        <script type="text/javascript" src="js/plugins/chartjs/chart-script.js"></script>
 
-    <!-- sparkline -->
-    <script type="text/javascript" src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <script type="text/javascript" src="js/plugins/sparkline/sparkline-script.js"></script>
+        <!-- sparkline -->
+        <script type="text/javascript" src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script type="text/javascript" src="js/plugins/sparkline/sparkline-script.js"></script>
 
-    <!--jvectormap-->
-    <script type="text/javascript" src="js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-    <script type="text/javascript" src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-    <script type="text/javascript" src="js/plugins/jvectormap/vectormap-script.js"></script>
+        <!--jvectormap-->
+        <script type="text/javascript" src="js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+        <script type="text/javascript" src="js/plugins/jvectormap/vectormap-script.js"></script>
 
 
-    <!--plugins.js - Some Specific JS codes for Plugin Settings-->
-    <script type="text/javascript" src="js/plugins.js"></script>
-    <!-- Toast Notification -->
-    <script type="text/javascript">
-        // Toast Notification
-        $(window).load(function() {
-            setTimeout(function() {
-                Materialize.toast('<span>Hiya! I am a toast.</span>', 1500);
-            }, 3000);
-            setTimeout(function() {
-                Materialize.toast('<span>You can swipe me too!</span>', 3000);
-            }, 5500);
-            setTimeout(function() {
-                Materialize.toast('<span>You have new order.</span><a class="btn-flat yellow-text" href="#">Read<a>', 3000);
-            }, 18000);
-        });
-    </script>
+        <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+        <script type="text/javascript" src="js/plugins.js"></script>
+        <!-- Toast Notification -->
+
+
+        <!-- Javascript Libs -->
+        <script type="text/javascript" src="../js/jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="../datatables/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="../datatables/dataTables.bootstrap.min.js"></script>
+        <script type="text/javascript" src="../dist/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function() {
+
+                var dataTable = $('#lookup').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        url: "ajax-grid-data1.php", // json datasource
+                        type: "post", // method  , by default get
+                        error: function(xhr, textStatus, errorThrown) { // error handling
+                            $(".lookup-error").html("");
+                            $("#lookup").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+                            $("#lookup_processing").css("display", "none");
+                            console.error('An error occurred: test', errorThrown);
+                        }
+                    }
+                });
+            });
+        </script>
     </body>
 
     </html>

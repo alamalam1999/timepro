@@ -34,8 +34,10 @@
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection">
   <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" type="text/css" rel="stylesheet" media="screen,projection">
-  <script src="../dist/sweetalert-dev.js"></script>
-  <link rel="stylesheet" href="../dist/sweetalert.css">
+  <link rel="stylesheet" type="text/css" href="../datatables/dataTables.bootstrap.css" />
+  <link rel="stylesheet" type="text/css" href="../dist/css/bootstrap.min.css" />
+  <!-- <script src="../dist/sweetalert-dev.js"></script>
+  <link rel="stylesheet" href="../dist/sweetalert.css"> -->
 
 
   <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
