@@ -255,6 +255,7 @@ if (empty($_SESSION['username'])) {
                             <tr>
                                 <th>Id Tiket</th>
                                 <th>Tanggal</th>
+                                <th>Due Date</th>
                                 <th>Jabatan</th>
                                 <th>Nama</th>
                                 <th>Email</th>
