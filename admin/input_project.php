@@ -72,8 +72,8 @@ if (empty($_SESSION['username'])) {
                 $waktu     = $_POST['waktu'];
                 $tanggal   = $_POST['tanggal'];
                 $no_hp     = $_POST['no_hp'];
-                $nama      = $_POST['nama'];
-                $email     = $_POST['email'];
+                $nama      = "cuk";
+                $email     = "adialamalam@gmail.com";
                 $due_date  = $_POST['due_date'];
                 $departemen = $_POST['departemen'];
                 $problem   = $_POST['problem'];
@@ -153,7 +153,7 @@ if (empty($_SESSION['username'])) {
                 <form class="cd-form floating-labels" method="POST" enctype="multipart/form-data" action="input_project.php">
 
                     <legend>
-                        <h2>Input Perkerjaan</h2>
+                        <strong><h3>Input Perkerjaan</h3></strong>
                     </legend>
 
                     <fieldset>
@@ -161,24 +161,33 @@ if (empty($_SESSION['username'])) {
                         <input type="hidden" name="id_tiket" value="<?php echo date("dmYHis"); ?>" id="id_ticket" />
                         <input type="hidden" name="waktu" value="<?php echo date("Y-m-d H:i:s"); ?>" id="waktu" />
                         <input type="hidden" name="tanggal" value="<?php echo date("Y-m-d"); ?>" id="tanggal" />
+                       
                         <div class="icon">
-                            <label class="cd-label" for="no_hp">Nama Pekerjaan</label>
+                            <label class="cd-label" style="font-size:13px;" for="no_hp">Nama Pekerjaan</label>
                             <input class="company" type="text" name="no_hp" id="no_hp" autocomplete="off" required="required">
                         </div>
 
                         <div class="icon">
-                            <label class="cd-label" for="nama">Nama</label>
-                            <input class="user" type="text" name="nama" id="nama" autocomplete="off" required="required">
+                            <label class="cd-label" style="font-size:13px;" >Deskripsi Pekerjaan</label>
+                            <textarea class="message" name="problem" id="problem" required style="widht: 964px; height: 73px; margin-bottom: 10px;"></textarea>
                         </div>
 
-                        <div class="icon">
-                            <label class="cd-label" for="nama">Email</label>
-                            <input class="email" type="email" name="email" id="email" autocomplete="off" required="email">
+                        <div class="icon" >
+                            <label class="cd-label" style="font-size:13px;" >Due Date Pekerjaan</label>
+                            <input type="datetime-local" name="due_date" id="due_date" required 
                         </div>
 
+                        <div style="margin-bottom: 70px;">
+                        <label for="cd-textarea" style="font-size:13px;" >Lampiran Pekerjaan</label>
+                        <input name="choosefile" type="file" class="form-control" id="customFile"/>
+                        </div>
+
+                        <legend>
+                        <strong><h3>Disposisi Perkerjaan</h3></strong>
+                    </legend>
 
                         <div class="icon">
-                            <label class="cd-label" for="cd-email">Departemen terkait pekerjaan</label>
+                            <label class="cd-label" style="font-size:13px; " for="cd-email">Departemen terkait pekerjaan</label>
                             <select class="email" name="departemen" id="departemen" required>
                                 <option value=""></option>
                                 <option value="Research and Development">Research and Development</option>
@@ -200,24 +209,28 @@ if (empty($_SESSION['username'])) {
                             </select>
                         </div>
 
+                
+                    <div class="row">
+                    <div class="input-field col s12">
+                      <!-- <i class="mdi-action-lock-outline prefix"></i> -->
+                      <select name="pic" id="pic" required>
+                        <option value="<?php echo $row['pic']; ?>"> <?php echo $row['pic']; ?></option>
+                        <?php
+                        $user = mysqli_query($koneksi, "SELECT * from user");
+                        while ($row = mysqli_fetch_array($user)) {
+                        ?>
+                          <option value="<?php echo $row['username'] ?>"><?php echo $row['username'] ?></option>
+                        <?php } ?>
+                      </select>
+                      <label for="Pic" style="font-size:13px;">PIC yang menangani</label>
+                    </div>
+                  </div>
 
-                        <div class="icon">
-                            <label class="cd-label">Keterangan</label>
-                            <textarea class="message" name="problem" id="problem" required></textarea>
+                        
+                       
+                        <div>
+                        <input type="submit" onclick="notifikasi()" name="input" id="input" value="Submit">
                         </div>
-
-                        <div class="icon">
-                            <label class="cd-label">Due Date</label>
-                            <input type="datetime-local" name="due_date" id="due_date" required>
-                        </div>
-
-
-                        <label for="cd-textarea">Lampiran Pekerjaan</label>
-                        <input name="choosefile" type="file" class="form-control" id="customFile" />
-
-
-                        <input type="submit" onclick="notifikasi()" name="input" id="input" value="Send Message">
-
                     </fieldset>
 
                 </form>
