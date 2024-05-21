@@ -151,127 +151,40 @@ if (empty($_SESSION['username'])) {
                         </div>
                     </div>
                     <!--card stats end-->
-
-
+                    <button><a href="dashboard_depan.php">Full View</a></button>
                     <div id="work-collections">
                         <div class="row">
-                            <div class="col s12 m12 l4">
-                                <ul id="projects-collection" class="collection">
-                                    <li class="collection-item avatar">
-                                        <i class="mdi-alert-error circle red darken-2"></i>
-                                        <span class="collection-header">Pekerjaan Baru</span>
-                                        <p>Status <b style="color: red;">New</b></p>
-                                        <!-- <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>-->
-                                    </li>
-                                    <?php
-                                    $tanggal = date("Y-m-d");
-                                    $query = "SELECT * FROM tiket WHERE status='new' limit 7";
-                                    $tampil = mysqli_query($koneksi, $query) or die(mysqli_error());
-                                    ?>
-                                    <?php
-                                    $no = 0;
-                                    while ($data = mysqli_fetch_array($tampil)) {
-                                        $no++; ?>
+                            <?php
+                            $tanggal = date("Y-m-d");
+                            $query = "SELECT * FROM user ";
+                            $query .= "limit 3";
+                            $tampil = mysqli_query($koneksi, $query) or die(mysqli_error());
+                            ?>
+                            <?php
+                            $no = 0;
+                            while ($data = mysqli_fetch_array($tampil)) {
+                                $no++; ?>
+                                <div class="col s12 m12 l4">
+                                    <ul id="projects-collection" class="collection">
+                                        <li class="collection-item avatar">
+                                            <i class="mdi-social-person circle red darken-2"></i>
+                                            <span class="collection-header">nama : <?php echo $data['username'] ?></span>
+                                            <p>Fullname : <?php echo $data['fullname'] ?></p>
+                                            <p>Level : <?php echo $data['level'] ?></p>
+                                        </li>
                                         <li class="collection-item">
                                             <div class="row">
-                                                <div class="col s9">
-                                                    <p class="collections-title"><?php echo $no; ?>. <?php echo $data['nama']; ?> | <?php echo $data['departemen']; ?></p>
-                                                    <p class="collections-content">Problem : <?php echo $data['problem']; ?></p>
-                                                </div>
-                                                <div class="col s3">
-                                                    <?php if ($data['status'] == "new") {
-                                                        echo "<span class='task-cat pink'>Tiket $data[status]</span>";
-                                                    } else if ($data['status'] == "close") {
-                                                        echo "<span class='task-cat teal'>Tiket $data[status]</span>";
-                                                    }
-                                                    ?>
-                                                </div>
+                                                <p>Pekerjaan Baru : 10</p>
+                                                <p>Pekerjaan Process : 10</p>
+                                                <p>Pekerjaan Selesai : 10</p>
+                                                <p>Total Pekerjaan : 10</p>
                                             </div>
                                         </li>
-                                    <?php
-                                    }
-                                    ?>
-                                </ul>
-                            </div>
-                            <div class="col s12 m12 l4">
-                                <ul id="projects-collection" class="collection">
-                                    <li class="collection-item avatar">
-                                        <i class="mdi-av-play-circle-fill circle green darken-2"></i>
-                                        <span class="collection-header">Pekerjaan Proses</span>
-                                        <p>Status <b style="color: green;">Process</b></p>
-                                        <!-- <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>-->
-                                    </li>
-                                    <?php
-                                    $tanggal = date("Y-m-d");
-                                    $query = "SELECT * FROM tiket WHERE status='proses' limit 7";
-                                    $tampil = mysqli_query($koneksi, $query) or die(mysqli_error());
-                                    ?>
-                                    <?php
-                                    $no = 0;
-                                    while ($data = mysqli_fetch_array($tampil)) {
-                                        $no++; ?>
-                                        <li class="collection-item">
-                                            <div class="row">
-                                                <div class="col s9">
-                                                    <p class="collections-title"><?php echo $no; ?>. <?php echo $data['nama']; ?> | <?php echo $data['departemen']; ?></p>
-                                                    <p class="collections-content">Problem : <?php echo $data['problem']; ?></p>
-                                                </div>
-                                                <div class="col s3">
-                                                    <?php if ($data['status'] == "proses") {
-                                                        echo "<span class='task-cat pink'>Tiket $data[status]</span>";
-                                                    } else if ($data['status'] == "close") {
-                                                        echo "<span class='task-cat teal'>Tiket $data[status]</span>";
-                                                    }
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    <?php
-                                    }
-                                    ?>
-                                </ul>
-                            </div>
-
-
-                            <div class="col s12 m12 l4">
-                                <ul id="issues-collection" class="collection">
-                                    <li class="collection-item avatar">
-                                        <i class="mdi-toggle-check-box circle light-blue darken-2"></i>
-                                        <span class="collection-header">Pekerjaan Selesai</span>
-                                        <p>Status <b style="color: blue;">Close</b></p>
-                                        <!-- <a href="#" class="secondary    -content"><i class="mdi-action-grade"></i></a> -->
-                                    </li>
-                                    <?php
-                                    $tanggal = date("Y-m-d");
-                                    $query1 = "SELECT * FROM tiket WHERE status='close' limit 7";
-                                    $tampil1 = mysqli_query($koneksi, $query1) or die(mysqli_error());
-                                    ?>
-                                    <?php
-                                    $no = 0;
-                                    while ($data1 = mysqli_fetch_array($tampil1)) {
-                                        $no++; ?>
-                                        <li class="collection-item">
-                                            <div class="row">
-                                                <div class="col s9">
-                                                    <p class="collections-title"><?php echo $no; ?>. <?php echo $data1['nama']; ?> | <?php echo $data1['departemen']; ?></p>
-                                                    <p class="collections-content">Problem : <?php echo $data1['problem']; ?></p>
-                                                    <p class="collections-content">Penanganan : <?php echo $data1['penanganan']; ?></p>
-                                                </div>
-                                                <div class="col s3">
-                                                    <?php if ($data1['status'] == "open") {
-                                                        echo "<span class='task-cat pink'>Tiket $data1[status]</span>";
-                                                    } else if ($data1['status'] == "close") {
-                                                        echo "<span class='task-cat teal'>Tiket $data1[status]</span>";
-                                                    }
-                                                    ?>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    <?php
-                                    }
-                                    ?>
-                                </ul>
-                            </div>
+                                    </ul>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <!--work collections end-->
@@ -285,19 +198,13 @@ if (empty($_SESSION['username'])) {
 
         </div>
         <!-- END MAIN -->
-
-
-
         <!-- //////////////////////////////////////////////////////////////////////////// -->
 
         <!-- START FOOTER -->
         <?php include "footer.php"; ?>
         <!-- END FOOTER -->
 
-
-        <!-- ================================================
-    Scripts
-    ================================================ -->
+        <!-- ================================================Scripts================================================ -->
 
         <!-- jQuery Library -->
         <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>

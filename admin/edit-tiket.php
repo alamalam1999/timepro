@@ -64,7 +64,7 @@ if (empty($_SESSION['username'])) {
       <section id="content">
 
         <!--breadcrumbs start-->
-        <div id="breadcrumbs-wrapper" class=" grey lighten-3">
+        <div id="breadcrumbs-wrapper" class=" whute lighten-3">
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
@@ -99,10 +99,10 @@ if (empty($_SESSION['username'])) {
             $email     = $_POST['email'];
             $departemen = $_POST['departemen'];
             $problem   = $_POST['problem'];
-            $penanganan = $_POST['penanganan'];
+            $penanganan = "kosong";
             $status    = $_POST['status'];
             $filename = $_POST['filename'];
-            $pic        = $_POST['pic'];
+            $pic        = "kosong";
             $fotopengerjaan        = $_FILES['choosefile']["name"];
             $tempname              = $_FILES["choosefile"]["tmp_name"];
 
@@ -243,23 +243,16 @@ if (empty($_SESSION['username'])) {
                     </div>
                   </div>
                   <div class="row">
-                    <div class="input-field col s12">
-                      <!-- <i class="mdi-action-question-answer prefix"></i> -->
-                      <textarea id="penanganan" name="penanganan" class="materialize-textarea validate" length="120"></textarea>
-                      <label for="Penanganan">Penanganan</label>
-                    </div>
-                  </div>
-                  <div class="row">
                     <?php
                     if ($row['fotopengerjaan'] == null && $row['fotopengerjaan'] == '') {
                     ?>
                       <label for="fotoperbaikan">Foto Perbaikan</label>
-                      <div class="input-field col s12">
+                      <div class="input-field col s12" style="padding-bottom: 20px;">
                         <input type="file" name="choosefile" value="">
                       </div>
                     <?php } else { ?>
                       <label for="fotoperbaikan">Foto Perbaikan</label>
-                      <div class="input-field col s12">
+                      <div class="input-field col s12" style="padding-bottom: 20px;">
                         <a href="/tiket/admin/images/<?php echo $row['fotopengerjaan'] ?>" style="color:#eee; text-align: center;" data-toggle="tooltip" title="Edit" class="btn-floating waves-effect waves-light light-blue darken-3">view</a>
                         <input type="file" name="choosefile" value="<?php echo $row['fotopengerjaan']; ?>" />
                       </div>
@@ -267,7 +260,6 @@ if (empty($_SESSION['username'])) {
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <!-- <i class="mdi-action-lock-outline prefix"></i> -->
                       <select name="status" id="status" required>
                         <option value="<?php echo $row['status']; ?>"> <?php echo $row['status']; ?></option>
                         <option value="New">New</option>
@@ -276,21 +268,6 @@ if (empty($_SESSION['username'])) {
                         <option value="Close">Close</option>
                       </select>
                       <label for="Status">Status</label>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <!-- <i class="mdi-action-lock-outline prefix"></i> -->
-                      <select name="pic" id="pic" required>
-                        <option value="<?php echo $row['pic']; ?>"> <?php echo $row['pic']; ?></option>
-                        <?php
-                        $user = mysqli_query($koneksi, "SELECT * from user");
-                        while ($row = mysqli_fetch_array($user)) {
-                        ?>
-                          <option value="<?php echo $row['username'] ?>"><?php echo $row['username'] ?></option>
-                        <?php } ?>
-                      </select>
-                      <label for="Pic">PIC yang menangani</label>
                     </div>
                   </div>
                   <div class="row">

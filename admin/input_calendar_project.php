@@ -192,7 +192,7 @@ if (empty($_SESSION['username'])) {
 
                     // Display the days of the month
                     for ($day = 1; $day <= $totalDays; $day++) {
-                        $highlightClass = in_array($day, $highlightedDays) ? 'bgcolor="red"' : '';
+                        $highlightClass = in_array($day, $highlightedDays) ? 'bgcolor="#2f86c5"' : '';
                         echo "<td $highlightClass>$day</td>";
 
                         if (++$numDayOfWeek == 7) {
@@ -241,15 +241,15 @@ if (empty($_SESSION['username'])) {
                 // Close database connection
                 mysqli_close($koneksi);
                 ?>
-
-
+            </div>
+            <div class="container">
+                <input type="text" name="month" placeholder="month">
+                <input type="text" name="years" placeholder="years">
+                <button>Check</button>
             </div>
             <div class="container">
                 <h3>List Job Scheduler</h3>
                 <div class="col-lg-12" style="margin-top: 40px;">
-
-
-
                     <table id="lookup" class="table table-bordered table-hover">
                         <thead bgcolor="eeeeee" align="center">
                             <tr>

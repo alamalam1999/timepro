@@ -12,7 +12,6 @@ $conn = mysqli_connect($servername, $username, $password, $dbname) or die("Conne
 // storing  request (ie, get/post) global array to a variable  
 $requestData = $_REQUEST;
 
-
 $columns = array(
 	// datatable column index  => database column name
 	0 => 'id_tiket',
@@ -80,13 +79,8 @@ while ($row = mysqli_fetch_array($query)) {  // preparing an array
                      <a href="edit-tiket.php?id=' . $row['id_tiket'] . '" style="color:#eee;"  data-toggle="tooltip" title="Edit" class="btn-floating waves-effect waves-light light-blue darken-3"><i class="mdi-editor-mode-edit"></i> </a>
 				     <a href="tiket.php?aksi=delete&id=' . $row['id_tiket'] . '"  data-toggle="tooltip" title="Delete" onclick="return confirm(\'Anda yakin akan menghapus data ' . $row['id_tiket'] . '?\')" class="btn-floating waves-effect waves-light red"><i class="mdi-action-delete"></i> </a>
 	                 </center></td>';
-
-	//$nestedData[] = number_format($total,0,",",".");		
-
 	$data[] = $nestedData;
 }
-
-
 
 $json_data = array(
 	"draw"            => intval($requestData['draw']),   // for every request/draw by clientside , they send a number as a parameter, when they recieve a response/data they first check the draw number, so we are sending same number in draw. 
