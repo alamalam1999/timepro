@@ -21,11 +21,11 @@ if (empty($_SESSION['username'])) {
 
     <body>
         <!-- Start Page Loading -->
-        <div id="loader-wrapper">
+        <!-- <div id="loader-wrapper">
             <div id="loader"></div>
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
-        </div>
+        </div> -->
         <!-- End Page Loading -->
 
         <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -62,104 +62,20 @@ if (empty($_SESSION['username'])) {
 
             <!-- //////////////////////////////////////////////////////////////////////////// -->
 
-
-
-
-
             <?php
 
+            $month = 0;
+            $year = 0;
 
-            if (isset($_POST['input'])) {
-
-                $id_tiket  = $_POST['id_tiket'];
-                $waktu     = $_POST['waktu'];
-                $tanggal   = $_POST['tanggal'];
-                $pc_no     = $_POST['pc_no'];
-                $nama      = $_POST['nama'];
-                $email     = $_POST['email'];
-                $departemen = $_POST['departemen'];
-                $problem   = $_POST['problem'];
-                $filename  = $_FILES["choosefile"]["name"];
-                $tempname  = $_FILES["choosefile"]["tmp_name"];
-                $none      = "";
-                $open      = "new";
-
-                $folder = "image/" . $filename;
-
-                $laporan = "<h4><b>Tiket Baru : $waktu</b></h4>";
-                $laporan .= "<br/>";
-                $laporan .= "<table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"3\" cellspacing=\"0\">";
-                $laporan .= "<tr>";
-                $laporan .= "<td>Tanggal</td><td>:</td><td>$tanggal</td>";
-                $laporan .= "</tr>";
-                $laporan .= "<tr>";
-                $laporan .= "<td>PC NO</td><td>:</td><td>$pc_no</td>";
-                $laporan .= "</tr>";
-                $laporan .= "<tr>";
-                $laporan .= "<td>Nama</td><td>:</td><td>$nama</td>";
-                $laporan .= "</tr>";
-                $laporan .= "<tr>";
-                $laporan .= "<td>Departemen</td><td>:</td><td>$departemen</td>";
-                $laporan .= "</tr>";
-                $laporan .= "<tr>";
-                $laporan .= "<td>Problem</td><td>:</td><td>$problem</td>";
-                $laporan .= "</tr>";
-                $laporan .= "<tr>";
-                $laporan .= "<td>Status/td><td>:</td><td>$open</td>";
-                $laporan .= "</tr>";
-
-
-                require_once("phpmailer/class.phpmailer.php");
-                require_once("phpmailer/class.smtp.php");
-
-                $sendmail = new PHPMailer(true);
-                $sendmail->isSMTP();                                            // Send using SMTP
-                $sendmail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
-                $sendmail->SMTPAuth   = true;                                   // Enable SMTP authentication
-                $sendmail->Username   = 'ypap@sekolah-avicenna.sch.id';                     // SMTP username
-                $sendmail->Password   = 'ypap@123';                               // SMTP password
-                $sendmail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-                $sendmail->setFrom('ypap@sekolah-avicenna.sch.id', 'YPAP');
-                $sendmail->addAddress("$email", "$nama"); //email tujuan
-                $sendmail->addReplyTo('ypap@sekolah-avicenna.sch.id', 'YPAP');
-                $sendmail->isHTML(true);                                  // Set email format to HTML
-                $sendmail->Subject = "Tiket TimePRO $waktu"; //subjek email
-                $sendmail->Body = $laporan; //isi pesan dalam format laporan
-                if (!$sendmail->Send()) {
-                    echo "Email gagal dikirim : " . $sendmail->ErrorInfo;
-                } else {
-                    //echo "Email berhasil terkirim!";  
-
-
-                    $cek = mysqli_query($koneksi, "SELECT * FROM tiket WHERE id_tiket='$id_tiket'");
-                    if (mysqli_num_rows($cek) == 0) {
-                        $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, pc_no, nama, email, departemen, problem, penanganan, status, filename)
-															VALUES('$id_tiket','$waktu','$tanggal','$pc_no','$nama','$email','$departemen','$problem','$none','$open','$filename')") or die(mysqli_error());
-                        if ($insert) {
-                            move_uploaded_file($tempname, $folder);
-                            echo '<script>sweetAlert({
-	                                                   title: "Keluhan berhasil dikirim!", 
-                                                        text: "Cek email anda untuk mengetahui nomor tiket!", 
-                                                        type: "success"
-                                                        });</script>';
-                        } else {
-                            echo '<script>sweetAlert({
-	                                                   title: "Gagal!", 
-                                                        text: "Keluhan Gagal di kirim, silahakan coba lagi!", 
-                                                        type: "error"
-                                                        });</script>';
-                        }
-                    } else {
-                        echo '<script>sweetAlert({
-	                                                   title: "Gagal!", 
-                                                        text: "Tiket Sudah ada Sebelumnya!", 
-                                                        type: "error"
-                                                        });</script>';
-                    }
-                }
+            if (isset($_POST['update'])) {
+                $month = $_POST['month'];
+                $year  = $_POST['year'];
             }
-            ?>
 
+            $currentYear = ($year != 0) ? $year : date("Y");
+            $currentMonth = ($month != 0) ? $month : date("n");
+
+            ?>
 
             <div class="container">
                 <?php
@@ -174,7 +90,7 @@ if (empty($_SESSION['username'])) {
                 }
 
                 // Function to generate the calendar
-                function generateCalendar($year, $month, $highlightedDays)
+                function generateCalendar($year, $month, $highlightedDays, $highlightedMonth, $highlightedYear)
                 {
                     echo "<h2>" . getMonthName($month) . " " . $year . "</h2>";
                     echo "<table>";
@@ -192,7 +108,10 @@ if (empty($_SESSION['username'])) {
 
                     // Display the days of the month
                     for ($day = 1; $day <= $totalDays; $day++) {
-                        $highlightClass = in_array($day, $highlightedDays) ? 'bgcolor="#2f86c5"' : '';
+                        $highlightClass = "";
+                        if (in_array($day, $highlightedDays) && in_array($month, $highlightedMonth) && in_array($year, $highlightedYear)) {
+                            $highlightClass = 'bgcolor="#2f86c5"';
+                        }
                         echo "<td $highlightClass>$day</td>";
 
                         if (++$numDayOfWeek == 7) {
@@ -226,26 +145,30 @@ if (empty($_SESSION['username'])) {
 
                 // Fetch highlighted days from the database
                 $highlightedDays = [];
+                $highlightedMonth = [];
+                $highlightedYear = [];
                 $result = mysqli_query($koneksi, "SELECT * FROM tiket");
                 while ($row = mysqli_fetch_assoc($result)) {
                     $highlightedDays[] = date('d', strtotime($row['waktu_close']));
+                    $highlightedMonth[] = date('m', strtotime($row['waktu_close']));
+                    $highlightedYear[] = date('Y', strtotime($row['waktu_close']));
                 }
 
-                // Get the current year and month
-                $currentYear = date("Y");
-                $currentMonth = date("n");
-
                 // Display the calendar for the current month
-                generateCalendar($currentYear, $currentMonth, $highlightedDays);
+                generateCalendar($currentYear, $currentMonth, $highlightedDays, $highlightedMonth, $highlightedYear);
 
                 // Close database connection
                 mysqli_close($koneksi);
                 ?>
             </div>
             <div class="container">
-                <input type="text" name="month" placeholder="month">
-                <input type="text" name="years" placeholder="years">
-                <button>Check</button>
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col"><input type="number" name="month" min="1" max="12" step="1" value="<?php echo date("m") ?>" require></div>
+                        <div class="col"><input type="number" name="year" min="1900" max="2099" step="1" value="<?php echo date("Y") ?>" require></div>
+                        <div> <button class="btn cyan" type="submit" name="update" id="update">Check</button></div>
+                    </div>
+                </form>
             </div>
             <div class="container">
                 <h3>List Job Scheduler</h3>

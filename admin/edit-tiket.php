@@ -19,11 +19,11 @@ if (empty($_SESSION['username'])) {
 
   <body>
     <!-- Start Page Loading -->
-    <div id="loader-wrapper">
+    <!-- <div id="loader-wrapper">
       <div id="loader"></div>
       <div class="loader-section section-left"></div>
       <div class="loader-section section-right"></div>
-    </div>
+    </div> -->
     <!-- End Page Loading -->
 
     <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -94,7 +94,7 @@ if (empty($_SESSION['username'])) {
             $waktu = $row['waktu'];
             $id_tiket  = $_POST['id_tiket'];
             $tanggal   = $_POST['tanggal'];
-            $pc_no     = $_POST['pc_no'];
+
             $nama      = $_POST['nama'];
             $email     = $_POST['email'];
             $departemen = $_POST['departemen'];
@@ -115,9 +115,7 @@ if (empty($_SESSION['username'])) {
             $laporan .= "<tr>";
             $laporan .= "<td>Tanggal</td><td>:</td><td>$tanggal</td>";
             $laporan .= "</tr>";
-            $laporan .= "<tr>";
-            $laporan .= "<td>PC NO</td><td>:</td><td>$pc_no</td>";
-            $laporan .= "</tr>";
+
             $laporan .= "<tr>";
             $laporan .= "<td>Nama</td><td>:</td><td>$nama</td>";
             $laporan .= "</tr>";
@@ -162,7 +160,7 @@ if (empty($_SESSION['username'])) {
               echo "Email gagal dikirim : " . $sendmail->ErrorInfo;
             } else {
 
-              $update = mysqli_query($koneksi, "UPDATE tiket SET tanggal='$tanggal', pc_no='$pc_no', nama='$nama', email='$email', departemen='$departemen', problem='$problem', penanganan='$penanganan', status='$status', pic='$pic', fotopengerjaan='$fotopengerjaan' WHERE id_tiket='$kd'") or die(mysqli_error());
+              $update = mysqli_query($koneksi, "UPDATE tiket SET tanggal='$tanggal', nama='$nama', email='$email', departemen='$departemen', problem='$problem', penanganan='$penanganan', status='$status', pic='$pic', fotopengerjaan='$fotopengerjaan' WHERE id_tiket='$kd'") or die(mysqli_error());
               if ($update) {
                 move_uploaded_file($tempname, $folder);
                 echo '<script>sweetAlert({
@@ -200,13 +198,7 @@ if (empty($_SESSION['username'])) {
                       <label for="Tanggal">Tanggal</label>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <!-- <i class="mdi-action-label-outline prefix"></i> -->
-                      <input id="pc_no" name="pc_no" value="<?php echo $row['no_hp']; ?>" type="text" readonly="readonly">
-                      <label for="PC No">Nama Barang</label>
-                    </div>
-                  </div>
+
                   <div class="row">
                     <div class="input-field col s12">
                       <!-- <i class="mdi-action-account-circle prefix"></i> -->

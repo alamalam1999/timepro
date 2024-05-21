@@ -22,19 +22,17 @@ if (empty($_SESSION['username'])) {
 
     <body>
         <!-- Start Page Loading -->
-        <!-- <div id="loader-wrapper">
+        <div id="loader-wrapper">
             <div id="loader"></div>
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
-        </div> -->
+        </div>
         <!-- End Page Loading -->
 
         <!-- //////////////////////////////////////////////////////////////////////////// -->
-
         <!-- START HEADER -->
         <?php include "header.php"; ?>
         <!-- END HEADER -->
-
         <!-- //////////////////////////////////////////////////////////////////////////// -->
 
         <!-- START MAIN -->
@@ -72,7 +70,7 @@ if (empty($_SESSION['username'])) {
                 $waktu     = $_POST['waktu'];
                 $tanggal   = $_POST['tanggal'];
                 $no_hp     = $_POST['no_hp'];
-                $nama      = "cuk";
+                $nama      = $_SESSION['username'];
                 $email     = "adialamalam@gmail.com";
                 $due_date  = $_POST['due_date'];
                 $departemen = $_POST['departemen'];
@@ -129,21 +127,30 @@ if (empty($_SESSION['username'])) {
                 if (!$sendmail->Send()) {
                     echo "Email gagal dikirim : " . $sendmail->ErrorInfo;
                 } else {
-                    //echo "Email berhasil terkirim!";  
-
-
                     $cek = mysqli_query($koneksi, "SELECT * FROM tiket WHERE id_tiket='$id_tiket'");
                     if (mysqli_num_rows($cek) == 0) {
                         $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, no_hp, nama, email, departemen, problem, penanganan, status, filename,waktu_close)
-                                                            VALUES('$id_tiket','$waktu','$tanggal','$no_hp','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')") or die(mysqli_error());
+                                                            VALUES('$id_tiket','$waktu','$tanggal','$no_hp','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')");
                         if ($insert) {
                             move_uploaded_file($tempname, $folder);
-                            echo '<h1>BERHASIL </h1>';
+                            echo '<script>sweetAlert({
+                                                           title: "Berhasil tersimpan!", 
+                                                            text: "Cek Kalender!", 
+                                                            type: "success"
+                                                            });</script>';
                         } else {
-                            echo '<h1>TIDAK BERHASIL </h1>';
+                            echo '<script>sweetAlert({
+                                                           title: "Gagal Tersimpan!", 
+                                                            text: "Coba Lagi!", 
+                                                            type: "error"
+                                                            });</script>';
                         }
                     } else {
-                        echo '<h1>GAGAL BERHASIL </h1>';
+                        echo '<script>sweetAlert({
+                                                           title: "Gagal Tersimpan!", 
+                                                            text: "Sudah ada Sebelumnya!", 
+                                                            type: "error"
+                                                            });</script>';
                     }
                 }
             }
@@ -217,7 +224,7 @@ if (empty($_SESSION['username'])) {
                                 <div class="input-field col s12">
                                     <!-- <i class="mdi-action-lock-outline prefix"></i> -->
                                     <select name="pic" id="pic" required>
-                                        <option value="<?php echo $row['pic']; ?>"> <?php echo $row['pic']; ?></option>
+                                        <option value="kosong"> Pilih</option>
                                         <?php
                                         $user = mysqli_query($koneksi, "SELECT * from user");
                                         while ($row = mysqli_fetch_array($user)) {
