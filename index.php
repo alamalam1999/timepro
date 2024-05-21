@@ -39,8 +39,8 @@
                         Copyright &copy; 2024 <a class="white-text"></a>
                     </div>
                     
-                        <span class="right">Powered By <a class>Tommy .H</a></span>
-		            	       
+                        <strong><span class="right">Powered By Altech Indonesia <a class></a></span></strong>
+                        <span class="right"><a class>www.altech.web.id</a></span>     
                     </div>
                 </div>
                 <div class="footer-copyright mt-3">

@@ -69,9 +69,9 @@ if (empty($_SESSION['username'])) {
                     <div class="container">
 
                         <div class="col s12 m12 l12">
-                            <h5 class="breadcrumbs-title">TimePRO</h5>
+                            <h5 class="breadcrumbs-title">Timeline Project</h5>
                             <ol class="breadcrumb">
-                                <li><a href="index.php">Dashboard</a></li>
+                                <li><a href="index.php">Dashboard Jobs</a></li>
                             </ol>
                         </div>
 
@@ -86,68 +86,19 @@ if (empty($_SESSION['username'])) {
                             <?php $tampil = mysqli_query($koneksi, "select * from tiket where status='new'");
                             $total = mysqli_num_rows($tampil);
                             ?>
-                            <div class="col s12 m6 l3">
-                                <div class="card">
-                                    <div class="card-content  red white-text">
-                                        <p class="card-stats-title"><i class=""></i>Pekerjaan Baru</p>
-                                        <h4 class="card-stats-number"><?php echo $total; ?></h4>
-                                        <p class="card-stats-compare"><!-- <i class="mdi-hardware-keyboard-arrow-up"></i> --> <span class="green-text text-lighten-5">Belum Ditangani</span>
-                                        </p>
-                                    </div>
-                                    <div class="card-action  red darken-2">
-                                        <div id="clients-bar"></div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <?php $tampil1 = mysqli_query($koneksi, "select * from tiket where status='proses'");
                             $total1 = mysqli_num_rows($tampil1);
                             ?>
-                            <div class="col s12 m6 l3">
-                                <div class="card">
-                                    <div class="card-content green white-text">
-                                        <p class="card-stats-title"><i class=""></i>Pekerjaan Proses</p>
-                                        <h4 class="card-stats-number"><?php echo $total1 ?></h4>
-                                        <p class="card-stats-compare"><!-- <i class="mdi-hardware-keyboard-arrow-up"></i> --> <span class="purple-text text-lighten-5">Sedang Ditangani</span>
-                                        </p>
-                                    </div>
-                                    <div class="card-action green darken-2">
-                                        <div id="sales-compositebar"></div>
-
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <?php $tampil2 = mysqli_query($koneksi, "select * from tiket where status='close'");
                             $total2 = mysqli_num_rows($tampil2);
                             ?>
-                            <div class="col s12 m6 l3">
-                                <div class="card">
-                                    <div class="card-content blue white-text">
-                                        <p class="card-stats-title"><i class=""></i>Pekerjaan Selesai</p>
-                                        <h4 class="card-stats-number"><?php echo $total2; ?></h4>
-                                        <p class="card-stats-compare"><!-- <i class="mdi-hardware-keyboard-arrow-up"></i> --> <span class="blue-grey-text text-lighten-5">Sudah Ditangani</span>
-                                        </p>
-                                    </div>
-                                    <div class="card-action blue darken-2">
-                                        <div id="profit-tristate"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <?php $tampil3 = mysqli_query($koneksi, "select * from tiket order by id_tiket");
                             $total3 = mysqli_num_rows($tampil3);
                             ?>
-                            <div class="col s12 m6 l3">
-                                <div class="card">
-                                    <div class="card-content deep-purple white-text">
-                                        <p class="card-stats-title"><i class=""></i>Total Pekerjaan Tersedia</p>
-                                        <h4 class="card-stats-number"><?php echo $total3; ?></h4>
-                                        <p class="card-stats-compare"><!-- <i class="mdi-hardware-keyboard-arrow-down"></i> 3% --><span class="deep-purple-text text-lighten-5">Jumlah Permasalahan</span>
-                                        </p>
-                                    </div>
-                                    <div class="card-action  deep-purple darken-2">
-                                        <div id="invoice-line"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                         </div>
                     </div>
                     <!--card stats end-->
@@ -168,7 +119,7 @@ if (empty($_SESSION['username'])) {
                                     <ul id="projects-collection" class="collection">
                                         <li class="collection-item avatar">
                                             <i class="mdi-social-person circle red darken-2"></i>
-                                            <span class="collection-header">nama : <?php echo $data['username'] ?></span>
+                                            <span class="collection-header">Nama        : <?php echo $data['username'] ?></span>
                                             <p>Fullname : <?php echo $data['fullname'] ?></p>
                                             <p>Level : <?php echo $data['level'] ?></p>
                                         </li>
