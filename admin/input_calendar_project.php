@@ -21,11 +21,11 @@ if (empty($_SESSION['username'])) {
 
     <body>
         <!-- Start Page Loading -->
-        <!-- <div id="loader-wrapper">
+        <div id="loader-wrapper">
             <div id="loader"></div>
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
-        </div> -->
+        </div>
         <!-- End Page Loading -->
 
         <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -77,6 +77,20 @@ if (empty($_SESSION['username'])) {
 
             ?>
 
+            <!--breadcrumbs start-->
+            <div id="breadcrumbs-wrapper" class=" white lighten-3">
+                <div class="container">
+
+                    <div class="col s12 m12 l12">
+                        <h5 class="breadcrumbs-title">TimePRO</h5>
+                        <ol class="breadcrumb">
+                            <li><a href="input_calendar_project.php">Kalender Kerja</a></li>
+                        </ol>
+                    </div>
+
+                </div>
+            </div>
+            <!--breadcrumbs end-->
             <div class="container">
                 <?php
                 // Function to get the name of the month
