@@ -12,10 +12,10 @@ if (empty($_SESSION['username'])) {
     <html lang="en">
 
     <!--================================================================================
-	Item Name: Materialize - Material Design Admin Template
-	Version: 1.0
-	Author: GeeksLabs
-	Author URL: http://www.themeforest.net/user/geekslabs
+    Item Name: Materialize - Material Design Admin Template
+    Version: 1.0
+    Author: GeeksLabs
+    Author URL: http://www.themeforest.net/user/geekslabs
 ================================================================================ -->
 
     <?php include "head.php"; ?>
@@ -124,7 +124,7 @@ if (empty($_SESSION['username'])) {
                 $sendmail->addAddress("$email", "$nama"); //email tujuan
                 $sendmail->addReplyTo('ypap@sekolah-avicenna.sch.id', 'YPAP');
                 $sendmail->isHTML(true);                                  // Set email format to HTML
-                $sendmail->Subject = "Tiket IT Helpdesk $waktu"; //subjek email
+                $sendmail->Subject = "Tiket TimePRO $waktu"; //subjek email
                 $sendmail->Body = $laporan; //isi pesan dalam format laporan
                 if (!$sendmail->Send()) {
                     echo "Email gagal dikirim : " . $sendmail->ErrorInfo;
@@ -135,7 +135,7 @@ if (empty($_SESSION['username'])) {
                     $cek = mysqli_query($koneksi, "SELECT * FROM tiket WHERE id_tiket='$id_tiket'");
                     if (mysqli_num_rows($cek) == 0) {
                         $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, no_hp, nama, email, departemen, problem, penanganan, status, filename,waktu_close)
-															VALUES('$id_tiket','$waktu','$tanggal','$no_hp','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')") or die(mysqli_error());
+                                                            VALUES('$id_tiket','$waktu','$tanggal','$no_hp','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')") or die(mysqli_error());
                         if ($insert) {
                             move_uploaded_file($tempname, $folder);
                             echo '<h1>BERHASIL </h1>';
@@ -153,7 +153,9 @@ if (empty($_SESSION['username'])) {
                 <form class="cd-form floating-labels" method="POST" enctype="multipart/form-data" action="input_project.php">
 
                     <legend>
-                        <strong><h3>Input Perkerjaan</h3></strong>
+                        <strong>
+                            <h3>Input Perkerjaan</h3>
+                        </strong>
                     </legend>
 
                     <fieldset>
@@ -161,81 +163,77 @@ if (empty($_SESSION['username'])) {
                         <input type="hidden" name="id_tiket" value="<?php echo date("dmYHis"); ?>" id="id_ticket" />
                         <input type="hidden" name="waktu" value="<?php echo date("Y-m-d H:i:s"); ?>" id="waktu" />
                         <input type="hidden" name="tanggal" value="<?php echo date("Y-m-d"); ?>" id="tanggal" />
-                       
+
                         <div class="icon">
                             <label class="cd-label" style="font-size:13px;" for="no_hp">Nama Pekerjaan</label>
                             <input class="company" type="text" name="no_hp" id="no_hp" autocomplete="off" required="required">
                         </div>
 
                         <div class="icon">
-                            <label class="cd-label" style="font-size:13px;" >Deskripsi Pekerjaan</label>
+                            <label class="cd-label" style="font-size:13px;">Deskripsi Pekerjaan</label>
                             <textarea class="message" name="problem" id="problem" required style="widht: 964px; height: 73px; margin-bottom: 10px;"></textarea>
                         </div>
 
                         <div class="icon">
-                            <label class="cd-label" style="font-size:13px;" for="no_hp">Indikator Ketercapaian Pekerjaan</label>
-                            <input class="company" type="text" name="no_hp" id="no_hp" autocomplete="off" required="required">
-                        </div>
+                            <label class="cd-label" style="font-size:13px;">Due Date Pekerjaan</label>
+                            <input type="datetime-local" name="due_date" id="due_date" required </div>
 
-                        <div class="icon" >
-                            <label class="cd-label" style="font-size:13px;" >Due Date Pekerjaan</label>
-                            <input type="datetime-local" name="due_date" id="due_date" required 
-                        </div>
+                            <div style="margin-bottom: 70px;">
+                                <label for="cd-textarea" style="font-size:13px;">Lampiran Pekerjaan</label>
+                                <input name="choosefile" type="file" class="form-control" id="customFile" />
+                            </div>
 
-                        <div style="margin-bottom: 70px;">
-                        <label for="cd-textarea" style="font-size:13px;" >Lampiran Pekerjaan</label>
-                        <input name="choosefile" type="file" class="form-control" id="customFile"/>
-                        </div>
+                            <legend>
+                                <strong>
+                                    <h3>Disposisi Perkerjaan</h3>
+                                </strong>
+                            </legend>
 
-                        <legend>
-                        <strong><h3>Disposisi Perkerjaan</h3></strong>
-                    </legend>
+                            <div class="icon">
+                                <label class="cd-label" style="font-size:13px; " for="cd-email">Departemen terkait pekerjaan</label>
+                                <select class="email" name="departemen" id="departemen" required>
+                                    <option value=""></option>
+                                    <option value="Research and Development">Research and Development</option>
+                                    <option value="Human Resources">Human Resources</option>
+                                    <option value="General Affair">General Affair</option>
+                                    <option value="Accounting & Tax">Accounting & Tax</option>
+                                    <option value="Finance">Finance</option>
+                                    <option value="Building Maintenance">Building & Maintenance</option>
+                                    <option value="Building Maintenance">Branding & Marketing</option>
+                                    <option value="Transformasi Digital">Transformasi Digital (IT)</option>
+                                    <option value="KB Avicenna Pamulang">KB Avicenna Pamulang</option>
+                                    <option value="TK Avicenna Jagakarsa">TK Avicenna Jagakarsa</option>
+                                    <option value="SD Avicenna Jagakarsa">SD Avicenna Jagakarsa</option>
+                                    <option value="SMP Avicenna Jagakarsa">SMP Avicenna Jagakarsa</option>
+                                    <option value="SMA Avicenna Jagakarsa">SMA Avicenna Jagakarsa</option>
+                                    <option value="SD Avicenna Cinere">SD Avicenna Cinere</option>
+                                    <option value="SMP Avicenna Cinere">SMP Avicenna Cinere</option>
+                                    <option value="SMA Avicenna Cinere">SMA Avicenna Cinere</option>
+                                </select>
+                            </div>
 
-                        <div class="icon">
-                            <label class="cd-label" style="font-size:13px; " for="cd-email">Departemen terkait pekerjaan</label>
-                            <select class="email" name="departemen" id="departemen" required>
-                                <option value=""></option>
-                                <option value="Research and Development">Research and Development</option>
-                                <option value="Human Resources">Human Resources</option>
-                                <option value="General Affair">General Affair</option>
-                                <option value="Accounting & Tax">Accounting & Tax</option>
-                                <option value="Finance">Finance</option>
-                                <option value="Building Maintenance">Building & Maintenance</option>
-                                <option value="Building Maintenance">Branding & Marketing</option>
-                                <option value="Transformasi Digital">Transformasi Digital (IT)</option>
-                                <option value="KB Avicenna Pamulang">KB Avicenna Pamulang</option>
-                                <option value="TK Avicenna Jagakarsa">TK Avicenna Jagakarsa</option>
-                                <option value="SD Avicenna Jagakarsa">SD Avicenna Jagakarsa</option>
-                                <option value="SMP Avicenna Jagakarsa">SMP Avicenna Jagakarsa</option>
-                                <option value="SMA Avicenna Jagakarsa">SMA Avicenna Jagakarsa</option>
-                                <option value="SD Avicenna Cinere">SD Avicenna Cinere</option>
-                                <option value="SMP Avicenna Cinere">SMP Avicenna Cinere</option>
-                                <option value="SMA Avicenna Cinere">SMA Avicenna Cinere</option>
-                            </select>
-                        </div>
 
-                
-                    <div class="row">
-                    <div class="input-field col s12">
-                      <!-- <i class="mdi-action-lock-outline prefix"></i> -->
-                      <select name="pic" id="pic" required>
-                        <option value="<?php echo $row['pic']; ?>"> <?php echo $row['pic']; ?></option>
-                        <?php
-                        $user = mysqli_query($koneksi, "SELECT * from user");
-                        while ($row = mysqli_fetch_array($user)) {
-                        ?>
-                          <option value="<?php echo $row['username'] ?>"><?php echo $row['username'] ?></option>
-                        <?php } ?>
-                      </select>
-                      <label for="Pic" style="font-size:13px;">PIC yang menangani</label>
-                    </div>
-                  </div>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <!-- <i class="mdi-action-lock-outline prefix"></i> -->
+                                    <select name="pic" id="pic" required>
+                                        <option value="<?php echo $row['pic']; ?>"> <?php echo $row['pic']; ?></option>
+                                        <?php
+                                        $user = mysqli_query($koneksi, "SELECT * from user");
+                                        while ($row = mysqli_fetch_array($user)) {
+                                        ?>
+                                            <option value="<?php echo $row['username'] ?>"><?php echo $row['username'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label for="Pic" style="font-size:13px;">PIC yang menangani</label>
+                                </div>
+                            </div>
 
-                        
-                       
-                        <div>
-                        <input type="submit" onclick="notifikasi()" name="input" id="input" value="Submit">
-                        </div>
+
+
+                            <div>
+                                <input type="submit" onclick="notifikasi()" name="input" id="input" value="Submit">
+                            </div>
                     </fieldset>
 
                 </form>
@@ -317,7 +315,7 @@ if (empty($_SESSION['username'])) {
             if (Notification.permission !== "granted")
                 Notification.requestPermission();
             else {
-                var notifikasi = new Notification('IT Helpdesk Tiket', {
+                var notifikasi = new Notification('TimePRO Tiket', {
                     icon: 'img/logo.jpg',
                     body: "Tiket Baru dari <?php echo $nama; ?>",
                 });

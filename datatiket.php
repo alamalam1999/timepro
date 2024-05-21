@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>IT Helpdesk System</title>
+  <title>TimePRO System</title>
   <meta name="author" content="ICT" />
 
   <link rel="stylesheet" type="text/css" href="datatables/dataTables.bootstrap.css" />
@@ -10,7 +10,7 @@
 
 <body style="background-image: url('image/rm380-14.jpg'); background-size: 1430px 1100px;">
   <h3>
-    <center>Data Ticket IT Helpdesk System</center>
+    <center>Data Ticket TimePRO System</center>
   </h3>
   <div class="col-lg-12" style="margin-top: 40px;">
 

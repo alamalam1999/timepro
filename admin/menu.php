@@ -28,14 +28,7 @@
         <!--</li>-->
         <li class="no-padding">
             <ul class="collapsible collapsible-accordion">
-                <li class="bold"><a class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a>
-                    <div class="collapsible-body">
-                        <ul>
-                            <li><a href="index.php">Data Tiket</a></li>
-                            <li><a href="index-gsuite.php">Data TIket G-Suite</a></li>
-                        </ul>
-                    </div>
-                </li>
+                <li class="bold"><a href="dashboard_depan.php" class="collapsible-header waves-effect waves-cyan"><i class="mdi-action-dashboard"></i> Dashboard</a></li>
             </ul>
         </li>
         <?php

@@ -123,7 +123,7 @@ if (empty($_SESSION['username'])) {
                 $sendmail->addAddress("$email", "$nama"); //email tujuan
                 $sendmail->addReplyTo('ypap@sekolah-avicenna.sch.id', 'YPAP');
                 $sendmail->isHTML(true);                                  // Set email format to HTML
-                $sendmail->Subject = "Tiket IT Helpdesk $waktu"; //subjek email
+                $sendmail->Subject = "Tiket TimePRO $waktu"; //subjek email
                 $sendmail->Body = $laporan; //isi pesan dalam format laporan
                 if (!$sendmail->Send()) {
                     echo "Email gagal dikirim : " . $sendmail->ErrorInfo;
@@ -286,7 +286,7 @@ if (empty($_SESSION['username'])) {
                     if (Notification.permission !== "granted")
                         Notification.requestPermission();
                     else {
-                        var notifikasi = new Notification('IT Helpdesk Tiket', {
+                        var notifikasi = new Notification('TimePRO Tiket', {
                             icon: 'img/logo.jpg',
                             body: "Tiket Baru dari <?php echo $nama; ?>",
                         });

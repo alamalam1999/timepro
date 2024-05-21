@@ -68,7 +68,7 @@ if (empty($_SESSION['username'])) {
           <div class="container">
             <div class="row">
               <div class="col s12 m12 l12">
-                <h5 class="breadcrumbs-title">Data Tiket IT Helpdesk</h5>
+                <h5 class="breadcrumbs-title">Data Tiket TimePRO</h5>
                 <ol class="breadcrumb">
                   <li><a href="index.php">Dashboard</a></li>
                   <li><a href="tiket.php">Tiket</a></li>
@@ -155,7 +155,7 @@ if (empty($_SESSION['username'])) {
             $sendmail->addAddress("$email", "$nama"); //email tujuan
             $sendmail->addReplyTo('ypap@sekolah-avicenna.sch.id', 'YPAP');
             $sendmail->isHTML(true);                                  // Set email format to HTML
-            $sendmail->Subject = "Tiket IT Helpdesk $waktu"; //subjek email
+            $sendmail->Subject = "Tiket TimePRO $waktu"; //subjek email
             $sendmail->Body = $laporan; //isi pesan dalam format laporan
 
             if (!$sendmail->Send()) {
