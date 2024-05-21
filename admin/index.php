@@ -166,7 +166,7 @@ if (empty($_SESSION['username'])) {
                                     <?php
                                     $tanggal = date("Y-m-d");
                                     $query = "SELECT * FROM tiket WHERE status='new' limit 7";
-                                    $tampil = mysqli_query($koneksi, $query) or die(mysqli_error());
+                                    $tampil = mysqli_query($koneksi, $query);
                                     ?>
                                     <?php
                                     $no = 0;
@@ -177,6 +177,8 @@ if (empty($_SESSION['username'])) {
                                                 <div class="col s9">
                                                     <p class="collections-title"><?php echo $no; ?>. <?php echo $data['nama']; ?> | <?php echo $data['departemen']; ?></p>
                                                     <p class="collections-content">Problem : <?php echo $data['problem']; ?></p>
+                                                    <input type="text" placeholder="Comment">
+                                                    <p><a href="#"><span class="task-cat blue">View</span></a></p>
                                                 </div>
                                                 <div class="col s3">
                                                     <?php if ($data['status'] == "new") {
@@ -204,7 +206,7 @@ if (empty($_SESSION['username'])) {
                                     <?php
                                     $tanggal = date("Y-m-d");
                                     $query = "SELECT * FROM tiket WHERE status='proses' limit 7";
-                                    $tampil = mysqli_query($koneksi, $query) or die(mysqli_error());
+                                    $tampil = mysqli_query($koneksi, $query);
                                     ?>
                                     <?php
                                     $no = 0;
@@ -244,7 +246,7 @@ if (empty($_SESSION['username'])) {
                                     <?php
                                     $tanggal = date("Y-m-d");
                                     $query1 = "SELECT * FROM tiket WHERE status='close' limit 7";
-                                    $tampil1 = mysqli_query($koneksi, $query1) or die(mysqli_error());
+                                    $tampil1 = mysqli_query($koneksi, $query1);
                                     ?>
                                     <?php
                                     $no = 0;
