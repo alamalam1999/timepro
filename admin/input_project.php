@@ -172,6 +172,11 @@ if (empty($_SESSION['username'])) {
                             <textarea class="message" name="problem" id="problem" required style="widht: 964px; height: 73px; margin-bottom: 10px;"></textarea>
                         </div>
 
+                        <div class="icon">
+                            <label class="cd-label" style="font-size:13px;" for="no_hp">Indikator Ketercapaian Pekerjaan</label>
+                            <input class="company" type="text" name="no_hp" id="no_hp" autocomplete="off" required="required">
+                        </div>
+
                         <div class="icon" >
                             <label class="cd-label" style="font-size:13px;" >Due Date Pekerjaan</label>
                             <input type="datetime-local" name="due_date" id="due_date" required 
