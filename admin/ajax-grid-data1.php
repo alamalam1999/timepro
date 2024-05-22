@@ -28,7 +28,7 @@ $columns = array(
 
 // getting total number records without any search
 $sql = "SELECT id_tiket, tanggal,waktu_close, no_hp, nama, email, departemen, problem, status, filename, pic";
-$sql .= " FROM tiket";
+$sql .= " FROM tiket where nama = '" . $requestData['extra_search'] . "'";
 $query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
 $totalData = mysqli_num_rows($query);
 $totalFiltered = $totalData;  // when there is no search parameter then total number rows = total number filtered rows.
@@ -38,15 +38,14 @@ if (!empty($requestData['search']['value'])) {
 	// if there is a search parameter
 	$sql = "SELECT id_tiket, tanggal,waktu_close, no_hp, nama, email, departemen, problem, status, filename, pic";
 	$sql .= " FROM tiket";
-	$sql .= " WHERE id_tiket LIKE '" . $requestData['search']['value'] . "%' ";    // $requestData['search']['value'] contains search parameter
-	$sql .= " OR tanggal LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR no_hp LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR nama LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR email LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR departemen LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR problem LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR status LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR pic LIKE '" . $requestData['seacrh']['value'] . "%' ";
+	$sql .= " WHERE nama = 'admin'";    // $requestData['search']['value'] contains search parameter
+	$sql .= " AND ( id_tiket LIKE '%" . $requestData['search']['value'] . "%' ";
+	$sql .= " OR tanggal LIKE '%" . $requestData['search']['value'] . "%' ";
+	$sql .= " OR no_hp LIKE '%" . $requestData['search']['value'] . "%' ";
+	$sql .= " OR email LIKE '%" . $requestData['search']['value'] . "%' ";
+	$sql .= " OR departemen LIKE '%" . $requestData['search']['value'] . "%' ";
+	$sql .= " OR problem LIKE '%" . $requestData['search']['value'] . "%' ";
+	$sql .= " OR status LIKE '%" . $requestData['search']['value'] . "%') ";
 	$query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
 	$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result without limit in the query 
 
@@ -56,7 +55,7 @@ if (!empty($requestData['search']['value'])) {
 } else {
 
 	$sql = "SELECT id_tiket, tanggal,waktu_close, no_hp, nama, email, departemen, problem, status, filename, pic";
-	$sql .= " FROM tiket";
+	$sql .= " FROM tiket where nama = '" . $requestData['extra_search'] . "'";
 	$sql .= " ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
 	$query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
 }

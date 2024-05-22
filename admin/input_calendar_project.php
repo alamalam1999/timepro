@@ -184,6 +184,9 @@ if (empty($_SESSION['username'])) {
                     </div>
                 </form>
             </div>
+            <div>
+                <input type="hidden" id="extra_search" value="<?php echo $_SESSION['username']; ?>">
+            </div>
             <div class="container" style="padding-bottom: 56px;">
                 <h3>List Job Scheduler</h3>
                 <div class="col-lg-12" style="margin-top: 40px;">
@@ -319,11 +322,16 @@ if (empty($_SESSION['username'])) {
                     "ajax": {
                         url: "ajax-grid-data1.php", // json datasource
                         type: "post", // method  , by default get
+                        data: function(d) {
+                            // Add extra search parameter to the AJAX request
+                            d.extra_search = $('#extra_search').val();
+                            console.log('extra_search:', d.extra_search);
+                        },
                         error: function(xhr, textStatus, errorThrown) { // error handling
                             $(".lookup-error").html("");
                             $("#lookup").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
                             $("#lookup_processing").css("display", "none");
-                            console.error('An error occurred: test', errorThrown);
+                            console.error('An error occurred: test', xhr);
                         }
                     }
                 });
