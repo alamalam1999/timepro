@@ -69,7 +69,7 @@ if (empty($_SESSION['username'])) {
                 $id_tiket  = $_POST['id_tiket'];
                 $waktu     = $_POST['waktu'];
                 $tanggal   = $_POST['tanggal'];
-                $no_hp     = $_POST['no_hp'];
+                $nama_pekerjaan     = $_POST['nama_pekerjaan'];
                 $nama      = $_SESSION['username'];
                 $email     = "adialamalam@gmail.com";
                 $due_date  = $_POST['due_date'];
@@ -89,7 +89,7 @@ if (empty($_SESSION['username'])) {
                 $laporan .= "<td>Tanggal</td><td>:</td><td>$tanggal</td>";
                 $laporan .= "</tr>";
                 $laporan .= "<tr>";
-                $laporan .= "<td>No Hp</td><td>:</td><td>$no_hp</td>";
+                $laporan .= "<td>No Hp</td><td>:</td><td>$nama_pekerjaan</td>";
                 $laporan .= "</tr>";
                 $laporan .= "<tr>";
                 $laporan .= "<td>Nama</td><td>:</td><td>$nama</td>";
@@ -129,8 +129,8 @@ if (empty($_SESSION['username'])) {
                 } else {
                     $cek = mysqli_query($koneksi, "SELECT * FROM tiket WHERE id_tiket='$id_tiket'");
                     if (mysqli_num_rows($cek) == 0) {
-                        $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, no_hp, nama, email, departemen, problem, penanganan, status, filename,waktu_close)
-                                                            VALUES('$id_tiket','$waktu','$tanggal','$no_hp','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')");
+                        $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, nama_pekerjaan, nama, email, departemen, problem, penanganan, status, filename,waktu_close)
+                                                            VALUES('$id_tiket','$waktu','$tanggal','$nama_pekerjaan','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')");
                         if ($insert) {
                             move_uploaded_file($tempname, $folder);
                             echo '<script>sweetAlert({
@@ -172,8 +172,8 @@ if (empty($_SESSION['username'])) {
                         <input type="hidden" name="tanggal" value="<?php echo date("Y-m-d"); ?>" id="tanggal" />
 
                         <div class="icon">
-                            <label class="cd-label" style="font-size:13px;" for="no_hp">Nama Pekerjaan</label>
-                            <input class="company" type="text" name="no_hp" id="no_hp" autocomplete="off" required="required">
+                            <label class="cd-label" style="font-size:13px;" for="nama_pekerjaan">Nama Pekerjaan</label>
+                            <input class="company" type="text" name="nama_pekerjaan" id="nama_pekerjaan" autocomplete="off" required="required">
                         </div>
 
                         <div class="icon">

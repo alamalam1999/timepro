@@ -14,20 +14,22 @@ $requestData = $_REQUEST;
 
 $columns = array(
 	// datatable column index  => database column name
-	0 => 'id_tiket',
-	1 => 'tanggal',
+
+
+	0 => 'nama_pekerjaan',
+	1 => 'problem',
+
 	2 => 'waktu_close',
-	3 => 'no_hp',
-	4 => 'nama',
-	5 => 'email',
-	6 => 'departemen',
-	7 => 'problem',
-	8 => 'status',
-	9 => 'edit'
+	3 => 'filename',
+
+	4 => 'departemen',
+	5 => 'pic',
+	6 => 'status',
+	7 => 'edit'
 );
 
 // getting total number records without any search
-$sql = "SELECT id_tiket, tanggal,waktu_close, no_hp, nama, email, departemen, problem, status, filename, pic";
+$sql = "SELECT id_tiket, tanggal,waktu_close, nama_pekerjaan, nama, email, departemen, problem, status, filename, pic";
 $sql .= " FROM tiket where nama = '" . $requestData['extra_search'] . "'";
 $query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
 $totalData = mysqli_num_rows($query);
@@ -36,12 +38,12 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 if (!empty($requestData['search']['value'])) {
 	// if there is a search parameter
-	$sql = "SELECT id_tiket, tanggal,waktu_close, no_hp, nama, email, departemen, problem, status, filename, pic";
+	$sql = "SELECT id_tiket, tanggal,waktu_close, nama_pekerjaan, nama, email, departemen, problem, status, filename, pic";
 	$sql .= " FROM tiket";
 	$sql .= " WHERE nama = 'admin'";    // $requestData['search']['value'] contains search parameter
 	$sql .= " AND ( id_tiket LIKE '%" . $requestData['search']['value'] . "%' ";
 	$sql .= " OR tanggal LIKE '%" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR no_hp LIKE '%" . $requestData['search']['value'] . "%' ";
+	$sql .= " OR nama_pekerjaan LIKE '%" . $requestData['search']['value'] . "%' ";
 	$sql .= " OR email LIKE '%" . $requestData['search']['value'] . "%' ";
 	$sql .= " OR departemen LIKE '%" . $requestData['search']['value'] . "%' ";
 	$sql .= " OR problem LIKE '%" . $requestData['search']['value'] . "%' ";
@@ -54,7 +56,7 @@ if (!empty($requestData['search']['value'])) {
 
 } else {
 
-	$sql = "SELECT id_tiket, tanggal,waktu_close, no_hp, nama, email, departemen, problem, status, filename, pic";
+	$sql = "SELECT id_tiket, tanggal,waktu_close, nama_pekerjaan, nama, email, departemen, problem, status, filename, pic";
 	$sql .= " FROM tiket where nama = '" . $requestData['extra_search'] . "'";
 	$sql .= " ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
 	$query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
@@ -64,14 +66,15 @@ $data = array();
 while ($row = mysqli_fetch_array($query)) {  // preparing an array
 	$nestedData = array();
 
-	$nestedData[] = $row["id_tiket"];
-	$nestedData[] = $row["tanggal"];
-	$nestedData[] = $row["waktu_close"];
-	$nestedData[] = $row["no_hp"];
-	$nestedData[] = $row["nama"];
-	$nestedData[] = $row["email"];
-	$nestedData[] = $row["departemen"];
+
+	$nestedData[] = $row["nama_pekerjaan"];
 	$nestedData[] = $row["problem"];
+
+	$nestedData[] = $row["waktu_close"];
+	$nestedData[] = $row["filename"];
+
+	$nestedData[] = $row["departemen"];
+	$nestedData[] = $row["pic"];
 	$nestedData[] = $row["status"];
 
 	$nestedData[] = '<td><center>

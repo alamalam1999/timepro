@@ -193,14 +193,12 @@ if (empty($_SESSION['username'])) {
                     <table id="lookup" class="table table-bordered table-hover">
                         <thead bgcolor="eeeeee" align="center">
                             <tr>
-                                <th>Id Tiket</th>
-                                <th>Tanggal</th>
+                                <th>Nama Pekerjaan</th>
+                                <th>Detail Pekerjaan</th>
                                 <th>Due Date</th>
-                                <th>Jabatan</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>Permasalahan</th>
+                                <th>Lampiran</th>
                                 <th>Departemen</th>
+                                <th>Pic</th>
                                 <th>Status</th>
                                 <th>Edit Status</th>
                             </tr>

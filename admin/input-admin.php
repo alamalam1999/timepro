@@ -94,14 +94,14 @@ if (empty($_SESSION['username'])) {
               $username = $_POST['username'];
               $password = $_POST['password'];
               $fullname = $_POST['fullname'];
-              $no_hp = $_POST['no_hp'];
+              $nama_pekerjaan = $_POST['nama_pekerjaan'];
               $level = $_POST['level'];
 
               if ($jenis_gambar == "image/jpeg" || $jenis_gambar == "image/jpg" || $jenis_gambar == "image/gif" || $jenis_gambar == "image/x-png") {
                 $gambar = $namafolder . basename($_FILES['nama_file']['name']);
                 if (move_uploaded_file($_FILES['nama_file']['tmp_name'], $gambar)) {
-                  $sql = "INSERT INTO user (user_id,username,password,fullname,no_hp,level,gambar) VALUES
-            ('$user_id','$username','$password','$fullname','$no_hp','$level','$gambar')";
+                  $sql = "INSERT INTO user (user_id,username,password,fullname,nama_pekerjaan,level,gambar) VALUES
+            ('$user_id','$username','$password','$fullname','$nama_pekerjaan','$level','$gambar')";
                   $res = mysqli_query($koneksi, $sql) or die(mysqli_error());
                   //echo "Gambar berhasil dikirim ke direktori".$gambar;
                   echo '<script>sweetAlert({
@@ -164,7 +164,7 @@ if (empty($_SESSION['username'])) {
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <input id="no_hp" name="no_hp" type="text" autocomplete="off" required="required">
+                      <input id="nama_pekerjaan" name="nama_pekerjaan" type="text" autocomplete="off" required="required">
                       <label for="No Hp">No HP</label>
                     </div>
                   </div>

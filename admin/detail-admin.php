@@ -115,7 +115,7 @@ if (empty($_SESSION['username'])) {
                   <tr>
                     <td>No HP</td>
                     </td>
-                    <td><?php echo $data['no_hp']; ?></td>
+                    <td><?php echo $data['nama_pekerjaan']; ?></td>
                   </tr>
                   <tr>
                     <td>Level</td>

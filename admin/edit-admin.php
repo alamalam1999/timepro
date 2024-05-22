@@ -95,10 +95,10 @@ if (empty($_SESSION['username'])) {
             $username = $_POST['username'];
             $password = $_POST['password'];
             $fullname = $_POST['fullname'];
-            $no_hp = $_POST['no_hp'];
+            $nama_pekerjaan = $_POST['nama_pekerjaan'];
             $level = $_POST['level'];
 
-            $update = mysqli_query($koneksi, "UPDATE user SET username='$username', password='$password', fullname='$fullname', no_hp='$no_hp', level='$level' WHERE user_id='$kd'") or die(mysqli_error());
+            $update = mysqli_query($koneksi, "UPDATE user SET username='$username', password='$password', fullname='$fullname', nama_pekerjaan='$nama_pekerjaan', level='$level' WHERE user_id='$kd'") or die(mysqli_error());
             if ($update) {
               echo '<script>sweetAlert({
 	                                                   title: "Berhasil!", 
@@ -146,7 +146,7 @@ if (empty($_SESSION['username'])) {
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <input id="no_hp" name="no_hp" type="text" value="<?php echo $row['no_hp'] ?>" autocomplete="off" required="required">
+                      <input id="nama_pekerjaan" name="nama_pekerjaan" type="text" value="<?php echo $row['nama_pekerjaan'] ?>" autocomplete="off" required="required">
                       <label for="No Hp">No HP</label>
                     </div>
                   </div>
