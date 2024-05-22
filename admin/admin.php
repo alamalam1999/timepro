@@ -118,7 +118,7 @@ if (empty($_SESSION['username'])) {
             }
           }
           ?>
-          <div id="table-datatables">
+          <div id="table-datatables" style="padding-bottom: 56px;">
             <h4 class="header"></h4>
             <a href="input-admin.php" class="btn-floating btn-small waves-effect waves-light green darken-2" title="Tambah Admin"><i class="mdi-content-add"></i></a>
             <br /><br />

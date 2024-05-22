@@ -184,7 +184,7 @@ if (empty($_SESSION['username'])) {
                     </div>
                 </form>
             </div>
-            <div class="container">
+            <div class="container" style="padding-bottom: 56px;">
                 <h3>List Job Scheduler</h3>
                 <div class="col-lg-12" style="margin-top: 40px;">
                     <table id="lookup" class="table table-bordered table-hover">
