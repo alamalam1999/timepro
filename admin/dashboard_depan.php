@@ -21,11 +21,11 @@ if (empty($_SESSION['username'])) {
 
     <body>
         <!-- Start Page Loading -->
-        <div id="loader-wrapper">
+        <!-- <div id="loader-wrapper">
             <div id="loader"></div>
             <div class="loader-section section-left"></div>
             <div class="loader-section section-right"></div>
-        </div>
+        </div> -->
         <!-- End Page Loading -->
 
         <!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -86,19 +86,19 @@ if (empty($_SESSION['username'])) {
                             <?php $tampil = mysqli_query($koneksi, "select * from tiket where status='new'");
                             $total = mysqli_num_rows($tampil);
                             ?>
-                           
+
                             <?php $tampil1 = mysqli_query($koneksi, "select * from tiket where status='proses'");
                             $total1 = mysqli_num_rows($tampil1);
                             ?>
-                            
+
                             <?php $tampil2 = mysqli_query($koneksi, "select * from tiket where status='close'");
                             $total2 = mysqli_num_rows($tampil2);
                             ?>
-                            
+
                             <?php $tampil3 = mysqli_query($koneksi, "select * from tiket order by id_tiket");
                             $total3 = mysqli_num_rows($tampil3);
                             ?>
-                            
+
                         </div>
                     </div>
                     <!--card stats end-->
@@ -109,29 +109,51 @@ if (empty($_SESSION['username'])) {
                             $tanggal = date("Y-m-d");
                             $query = "SELECT * FROM user ";
                             $query .= "limit 3";
-                            $tampil = mysqli_query($koneksi, $query) or die(mysqli_error());
+                            $tampil = mysqli_query($koneksi, $query);
                             ?>
                             <?php
                             $no = 0;
                             while ($data = mysqli_fetch_array($tampil)) {
                                 $no++; ?>
                                 <div class="col s12 m12 l4">
-                                    <ul id="projects-collection" class="collection">
-                                        <li class="collection-item avatar">
-                                            <i class="mdi-social-person circle red darken-2"></i>
-                                            <span class="collection-header">Nama        : <?php echo $data['username'] ?></span>
-                                            <p>Fullname : <?php echo $data['fullname'] ?></p>
-                                            <p>Level : <?php echo $data['level'] ?></p>
-                                        </li>
-                                        <li class="collection-item">
-                                            <div class="row">
-                                                <p>Pekerjaan Baru : 10</p>
-                                                <p>Pekerjaan Process : 10</p>
-                                                <p>Pekerjaan Selesai : 10</p>
-                                                <p>Total Pekerjaan : 10</p>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <a href="dashboard_depan.php">
+                                        <ul id="projects-collection" class="collection">
+                                            <li class="collection-item avatar">
+                                                <i class="mdi-social-person circle red darken-2"></i>
+                                                <span class="collection-header">Nama : <?php echo $data['username'] ?></span>
+                                                <p>Fullname : <?php echo $data['fullname'] ?></p>
+                                                <p>Level : <?php echo $data['level'] ?></p>
+                                            </li>
+                                            <li class="collection-item">
+                                                <div class="row">
+                                                    <?php
+                                                    $query_baru = "SELECT * FROM tiket where nama = '" . $data['username'] . "' and status = 'new'";
+                                                    $tampil_baru = mysqli_query($koneksi, $query_baru);
+                                                    $total_baru = mysqli_num_rows($tampil_baru);
+                                                    ?>
+                                                    <p>Pekerjaan Baru : <?php echo $total_baru; ?></p>
+                                                    <?php
+                                                    $query_process = "SELECT * FROM tiket where nama = '" . $data['username'] . "' and status = 'Proses'";
+                                                    $tampil_process = mysqli_query($koneksi, $query_process);
+                                                    $total_process = mysqli_num_rows($tampil_process);
+                                                    ?>
+                                                    <p>Pekerjaan Process : <?php echo $total_process ?></p>
+                                                    <?php
+                                                    $query_selesai = "SELECT * FROM tiket where nama = '" . $data['username'] . "' and status = 'Close'";
+                                                    $tampil_selesai = mysqli_query($koneksi, $query_selesai);
+                                                    $total_selesai = mysqli_num_rows($tampil_selesai);
+                                                    ?>
+                                                    <p>Pekerjaan Selesai : <?php echo $total_selesai; ?></p>
+                                                    <?php
+                                                    $query_total = "SELECT * FROM tiket where nama = '" . $data['username'] . "'";
+                                                    $tampil_total = mysqli_query($koneksi, $query_total);
+                                                    $total_total = mysqli_num_rows($tampil_total);
+                                                    ?>
+                                                    <p>Total Pekerjaan : <?php echo $total_total; ?></p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </a>
                                 </div>
                             <?php
                             }
