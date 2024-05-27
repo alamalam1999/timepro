@@ -175,10 +175,10 @@ if (empty($_SESSION['username'])) {
                                         <li class="collection-item">
                                             <div class="row">
                                                 <div class="col s9">
-                                                    <p class="collections-title"><?php echo $no; ?>. <?php echo $data['nama']; ?> | <?php echo $data['departemen']; ?></p>
-                                                    <p class="collections-content">Problem : <?php echo $data['problem']; ?></p>
+                                                    <span class="collections-title"><?php echo $no; ?>. <?php echo $data['nama']; ?> | <?php echo $data['departemen']; ?></span>
+                                                    <h5 class="collections-content">Detail Pekerjaan : <?php echo $data['problem']; ?></h5>
                                                     <input type="text" placeholder="Comment">
-                                                    <p><a href="#"><span class="task-cat blue">View</span></a></p>
+                                                    <h3><a href="#"><span class="task-cat blue">View</span></a></h3>
                                                 </div>
                                                 <div class="col s3">
                                                     <?php if ($data['status'] == "new") {

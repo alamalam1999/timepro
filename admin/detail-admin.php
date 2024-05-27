@@ -96,7 +96,7 @@ if (empty($_SESSION['username'])) {
                     <td><?php echo $data['user_id']; ?></td>
                     <td rowspan="6">
                       <div class="pull-right image">
-                        <img src="<?php echo $data['gambar']; ?>" class="img-rounded" height="300" width="250" alt="User Image" style="border: 3px solid #666; border-radius: 2px;" />
+                        <img src="<?php echo $data['gambar']; ?>" class="img-rounded" height="150" width="150" alt="User Image"/>
                       </div>
                     </td>
                   </tr>
