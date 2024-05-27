@@ -117,15 +117,19 @@ if (empty($_SESSION['username'])) {
                                 $no++; ?>
                                 <div class="col s12 m12 l4">
                                     <a href="dashboard_depan.php">
-                                   
+
                                         <ul id="projects-collection" class="collection">
-                                          
-                                            <li class="collection-item avatar">
-                                            <img src="<?php echo $data['gambar']; ?>" class="img-rounded" height="100" width="100" alt="User Image"/>
-                                                <i class=></i>
-                                                <h5 class="collection-header">Nama : <?php echo $data['username'] ?></h5>
-                                                <h5>Fullname : <?php echo $data['fullname'] ?></h5>
-                                                <h5>Level : <?php echo $data['level'] ?></h5>
+                                            <li class="collection-item">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <img src="<?php echo $data['gambar']; ?>" class="img-rounded" height="100" width="100" alt="User Image" />
+                                                    </div>
+                                                    <div class="col">
+                                                        <h5>Nama : <?php echo $data['username'] ?></h5>
+                                                        <h5>Fullname : <?php echo $data['fullname'] ?></h5>
+                                                        <h5>Level : <?php echo $data['level'] ?></h5>
+                                                    </div>
+                                                </div>
                                             </li>
                                             <li class="collection-item">
                                                 <div class="row">
