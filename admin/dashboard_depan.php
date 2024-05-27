@@ -157,7 +157,7 @@ if (empty($_SESSION['username'])) {
                                                     $total_total = mysqli_num_rows($tampil_total);
                                                     ?>
                                                     <p>Total Pekerjaan : <?php echo $total_total; ?></p>
-                                                    <a href="#" style="float: right;"><button>Check</button></a>
+                                                    <a href="#" style="float: right;"><button type="button" class="btn btn-primary btn-sm">View Detail</button></a>
                                                 </div>
                                             </li>
                                         </ul>

@@ -178,7 +178,7 @@ if (empty($_SESSION['username'])) {
                                                     <span class="collections-title"><?php echo $no; ?>. <?php echo $data['nama']; ?> | <?php echo $data['departemen']; ?></span>
                                                     <h5 class="collections-content">Detail Pekerjaan : <?php echo $data['problem']; ?></h5>
                                                     <input type="text" placeholder="Comment">
-                                                    <h3><a href="#"><span class="task-cat blue">View</span></a></h3>
+                                                    <p><a href="#"><button type="button" class="btn btn-primary btn-sm">Primary</button></a></p>
                                                 </div>
                                                 <div class="col s3">
                                                     <?php if ($data['status'] == "new") {
