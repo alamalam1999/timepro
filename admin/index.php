@@ -79,7 +79,7 @@ if (empty($_SESSION['username'])) {
                 </div>
                 <!--breadcrumbs end-->
                 <!-- Container -->
-                <div class="container">
+                <div class="container" style="padding-bottom: 56px;">
                     <!--card stats start-->
                     <div id="card-stats">
                         <div class="row">
