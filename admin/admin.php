@@ -5,17 +5,10 @@ if (session_status() === PHP_SESSION_NONE) {
 if (empty($_SESSION['username'])) {
   header('location:../index.php');
 } else {
-  include "index.php";
+  include "../conn.php";
 ?>
   <!DOCTYPE html>
   <html lang="en">
-
-  <!--================================================================================
-	Item Name: Materialize - Material Design Admin Template
-	Version: 1.0
-	Author: GeeksLabs
-	Author URL: http://www.themeforest.net/user/geekslabs
-================================================================================ -->
 
   <?php include "head.php"; ?>
 
@@ -84,12 +77,6 @@ if (empty($_SESSION['username'])) {
 
         <!--start container-->
         <div class="container">
-          <!-- <div class="section">
-
-            <p class="caption">Tables are a nice way to organize a lot of data. We provide a few utility classes to help you style your table as easily as possible. In addition, to improve mobile experience, all tables on mobile-screen widths are centered automatically.</p>
-            <div class="divider"></div> -->
-
-          <!--DataTables example-->
           <?php
           if (isset($_GET['aksi']) == 'delete') {
             $id = $_GET['id'];
@@ -146,10 +133,6 @@ if (empty($_SESSION['username'])) {
               </div>
             </div>
           </div>
-
-
-
-
         </div>
 
       </div>
@@ -176,7 +159,7 @@ if (empty($_SESSION['username'])) {
     <!-- ================================================
     Scripts
     ================================================ -->
-    !-- jQuery Library -->
+
     <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
     <!--materialize js-->
     <script type="text/javascript" src="js/materialize.js"></script>
