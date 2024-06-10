@@ -132,7 +132,6 @@ if (empty($_SESSION['username'])) {
                       <th>Username</th>
                       <th>Password</th>
                       <th>Fullname</th>
-                      <th>No HP</th>
                       <th>Level</th>
                       <th>Tools</th>
 

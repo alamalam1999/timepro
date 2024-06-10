@@ -19,12 +19,11 @@ $columns = array(
 	1 => 'username',
 	2 => 'password',
 	3 => 'fullname',
-	4 => 'nama_pekerjaan',
-	5 => 'level'
+	4 => 'level'
 );
 
 // getting total number records without any search
-$sql = "SELECT user_id, username, password, fullname, nama_pekerjaan, level";
+$sql = "SELECT user_id, username, password, fullname, level";
 $sql .= " FROM user";
 $query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
 $totalData = mysqli_num_rows($query);
@@ -33,13 +32,12 @@ $totalFiltered = $totalData;  // when there is no search parameter then total nu
 
 if (!empty($requestData['search']['value'])) {
 	// if there is a search parameter
-	$sql = "SELECT user_id, username, password, fullname, nama_pekerjaan, level";
+	$sql = "SELECT user_id, username, password, fullname, level";
 	$sql .= " FROM user";
 	$sql .= " WHERE user_id LIKE '" . $requestData['search']['value'] . "%' ";    // $requestData['search']['value'] contains search parameter
 	$sql .= " OR username LIKE '" . $requestData['search']['value'] . "%' ";
 	$sql .= " OR password LIKE '" . $requestData['search']['value'] . "%' ";
 	$sql .= " OR fullname LIKE '" . $requestData['search']['value'] . "%' ";
-	$sql .= " OR nama_pekerjaan LIKE '" . $requestData['search']['value'] . "%' ";
 	$sql .= " OR level LIKE '" . $requestData['search']['value'] . "%' ";
 	$query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
 	$totalFiltered = mysqli_num_rows($query); // when there is a search parameter then we have to modify total number filtered rows as per search result without limit in the query 
@@ -49,7 +47,7 @@ if (!empty($requestData['search']['value'])) {
 
 } else {
 
-	$sql = "SELECT user_id, username, password, fullname, nama_pekerjaan, level";
+	$sql = "SELECT user_id, username, password, fullname, level";
 	$sql .= " FROM user";
 	$sql .= " ORDER BY " . $columns[$requestData['order'][0]['column']] . "   " . $requestData['order'][0]['dir'] . "   LIMIT " . $requestData['start'] . " ," . $requestData['length'] . "   ";
 	$query = mysqli_query($conn, $sql) or die("ajax-grid-data.php: get Tiket");
@@ -63,7 +61,6 @@ while ($row = mysqli_fetch_array($query)) {  // preparing an array
 	$nestedData[] = $row["username"];
 	$nestedData[] = $row["password"];
 	$nestedData[] = $row["fullname"];
-	$nestedData[] = $row["nama_pekerjaan"];
 	$nestedData[] = $row["level"];
 	$nestedData[] = '<td><center>
                      <a href="detail-admin.php?id=' . $row['user_id'] . '" style="color:#eee;"  data-toggle="tooltip" title="Edit" class="btn-floating waves-effect waves-light blue-grey"><i class="mdi-action-perm-identity"></i> </a>
