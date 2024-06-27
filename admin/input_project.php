@@ -80,7 +80,7 @@ if (empty($_SESSION['username'])) {
                 $none      = "";
                 $open      = "new";
 
-                $folder = "image/" . $filename;
+
 
                 $laporan = "<h4><b>Tiket Baru : $waktu</b></h4>";
                 $laporan .= "<br/>";
@@ -132,6 +132,7 @@ if (empty($_SESSION['username'])) {
                         $insert = mysqli_query($koneksi, "INSERT INTO tiket(id_tiket,waktu, tanggal, nama_pekerjaan, nama, email, departemen, problem, penanganan, status, filename,waktu_close)
                                                             VALUES('$id_tiket','$waktu','$tanggal','$nama_pekerjaan','$nama','$email','$departemen','$problem','$none','$open','$filename','$due_date')");
                         if ($insert) {
+                            $folder = "images/" . $filename;
                             move_uploaded_file($tempname, $folder);
                             echo '<script>sweetAlert({
                                                            title: "Berhasil tersimpan!", 

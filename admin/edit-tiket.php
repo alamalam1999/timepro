@@ -230,7 +230,7 @@ if (empty($_SESSION['username'])) {
                   <div class="row">
                     <div class="input-field col s12">
                       <!-- <i class="mdi-action-subject prefix"></i> -->
-                      <a href="/tiket/image/<?php echo $row['filename']; ?>" style="color:#eee; text-align: center;" data-toggle="tooltip" title="Edit" class="btn-floating waves-effect waves-light light-blue darken-3">view</a><label for="Problem">View</label>
+                      <a href="/timepro/admin/images/<?php echo $row['filename']; ?>" style="color:#eee; text-align: center;" data-toggle="tooltip" title="Edit" class="btn-floating waves-effect waves-light light-blue darken-3">view</a><label for="Problem">View</label>
                       <label for="Departemen">View</label>
                     </div>
                   </div>
